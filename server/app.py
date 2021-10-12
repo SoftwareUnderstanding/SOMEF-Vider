@@ -12,5 +12,6 @@ def test():  # put application's code here
 
     return cli_get_data(0.8, True, repo_url='https://github.com/KnowledgeCaptureAndDiscovery/somef/')
 
+
 if __name__ == '__main__':
     app.run()

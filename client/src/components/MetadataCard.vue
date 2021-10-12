@@ -4,7 +4,11 @@
         <v-card-title>
           <v-container>
             <v-row justify="space-between">
-
+              <v-col>
+                <confidence-chip :value="0.35"></confidence-chip>
+                <confidence-chip :value="55"></confidence-chip>
+                <confidence-chip :value="1222"></confidence-chip>
+              </v-col>
               <v-col>
                 TITLE
               </v-col>
@@ -59,15 +63,21 @@
 </template>
 
 <script>
+import ConfidenceChip from "@/components/ConfidenceChip";
+
 export default {
   name: "MetadataCard",
+  components:{
+    ConfidenceChip
+  },
   props: {
     metadata: null,
   },
   data: () => ({
     tab: null,
     tabItems: [],
-    rating: 3
+    rating: 3,
+    confidence: 40
   }),
   methods:{
     generateTabs(rawMetadata) {

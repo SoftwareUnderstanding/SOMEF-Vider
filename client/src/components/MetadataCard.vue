@@ -6,8 +6,8 @@
             <v-row justify="space-between">
               <v-col>
                 <confidence-chip :value="0.35"></confidence-chip>
-                <confidence-chip :value="55"></confidence-chip>
-                <confidence-chip :value="1222"></confidence-chip>
+                <confidence-chip :value="1"></confidence-chip>
+                <confidence-chip :value="90"></confidence-chip>
               </v-col>
               <v-col>
                 TITLE

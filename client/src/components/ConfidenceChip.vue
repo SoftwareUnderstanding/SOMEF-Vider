@@ -2,11 +2,13 @@
   <v-tooltip top>
     <template v-slot:activator="{ on, attrs }">
       <v-chip
+          v-bind="attrs"
+          v-on="on"
           class="ma-2"
           :color="colorRenderer()"
           text-color="white"
       >
-        <v-icon v-bind="attrs" v-on="on">
+        <v-icon>
           mdi-alpha-c-circle
         </v-icon>
         {{value}}%

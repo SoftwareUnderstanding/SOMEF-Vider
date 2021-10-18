@@ -5,11 +5,6 @@
           <v-container>
             <v-row justify="space-between">
               <v-col>
-                <confidence-chip :value="0.35"></confidence-chip>
-                <confidence-chip :value="1"></confidence-chip>
-                <confidence-chip :value="90"></confidence-chip>
-              </v-col>
-              <v-col>
                 TITLE
               </v-col>
               <v-col cols="1">
@@ -59,16 +54,26 @@
           </v-tab-item>
         </v-tabs-items>
 
+        <!-- TEST AREA-->
+        <confidence-chip :value="0.35"></confidence-chip>
+        <confidence-chip :value="63.2"></confidence-chip>
+        <confidence-chip :value="90"></confidence-chip>
+        <extract-method-chip value="github"></extract-method-chip>
+        <extract-method-chip value="regular-expression"></extract-method-chip>
+        <extract-method-chip value="asdf"></extract-method-chip>
+
       </v-card>
 </template>
 
 <script>
 import ConfidenceChip from "@/components/ConfidenceChip";
+import ExtractMethodChip from "@/components/ExtractMethodChip";
 
 export default {
   name: "MetadataCard",
   components:{
-    ConfidenceChip
+    ConfidenceChip,
+    ExtractMethodChip,
   },
   props: {
     metadata: null,

@@ -32,11 +32,14 @@ export default {
       if(this.value < 50){
         return 'red'
       }
-      else if(50 < this.value < 75){
+      else if(50 < this.value  && this.value < 75){
         return 'orange'
       }
       else if(75 < this.value){
         return 'green'
+      }
+      else{
+        return 'inherit'
       }
     }
   }

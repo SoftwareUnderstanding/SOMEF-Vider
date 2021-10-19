@@ -31,20 +31,26 @@ export default {
       {
         idName: 'unknown',
         icon: 'mdi-help-rhombus',
+        color: 'inherit',
         name: 'Unknown',
-        color: 'inherit'
       },
       {
         idName: 'github',
         icon: 'mdi-github',
-        name: 'GitHub',
-        color: 'blue'
+        color: 'blue',
+        name: 'GitHub API',
       },
       {
         idName: 'regular-expression',
         icon: 'mdi-regex',
+        color: 'yellow',
         name: 'Regular Expression',
-        color: 'yellow'
+      },
+      {
+        idName: 'header-extraction',
+        icon: 'mdi-xml',
+        color: 'green',
+        name: 'Header Extraction',
       },
 
     ],

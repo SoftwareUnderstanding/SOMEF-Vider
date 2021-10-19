@@ -54,8 +54,8 @@ export default {
       },
       {
         idName: 'File Exploration',
-        icon: '',
-        color: '',
+        icon: 'mdi-file-find',
+        color: 'brown',
         name: 'File Exploration',
       },
 

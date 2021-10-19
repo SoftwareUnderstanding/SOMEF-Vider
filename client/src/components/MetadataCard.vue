@@ -13,9 +13,10 @@
                 </v-btn>
               </v-col>
             </v-row>
+
             <v-row align="center">
                 <v-rating
-                    v-model="rating"
+                    value="4"
                     color="amber"
                     dense
                     half-increments
@@ -23,7 +24,7 @@
                     size="17"
                 ></v-rating>
                 <div class="grey--text ms-4 text-caption">
-                  ({{ rating }})
+                  ({{ 4 }})
                 </div>
             </v-row>
           </v-container>
@@ -31,25 +32,28 @@
 
         <!-- Tab Headers -->
         <v-tabs
-            v-model="tab"
+            v-model="tabIndex"
             show-arrows
         >
           <v-tab
-              v-for="item in tabItems"
-              :key="item.tab"
+              v-for="item in tabItemsList"
+              :key="item.title"
           >
-            {{ item.tab }}
+            {{ item.title }}
           </v-tab>
         </v-tabs>
 
         <!-- Tab Content -->
-        <v-tabs-items v-model="tab">
+        <v-tabs-items v-model="tabIndex">
           <v-tab-item
-              v-for="item in tabItems"
-              :key="item.tab"
+              v-for="item in tabItemsList"
+              :key="item.title"
           >
             <v-card flat>
-              <v-card-text>{{ item.content }}</v-card-text>
+              <v-card-text>{{ item.body }}</v-card-text>
+              <confidence-chip :value="item.confidence"></confidence-chip>
+              <extract-method-chip :value="item.extractionMethod"></extract-method-chip>
+
             </v-card>
           </v-tab-item>
         </v-tabs-items>
@@ -79,19 +83,36 @@ export default {
     metadata: null,
   },
   data: () => ({
-    tab: null,
-    tabItems: [],
-    rating: 3,
-    confidence: 40
+    tabIndex: null,
+    tabItemsList: [],
   }),
   methods:{
     generateTabs(rawMetadata) {
       for(let item in rawMetadata){
-        this.tabItems.push({
-          tab: item,
-          content: rawMetadata[item]
-        })
+        this.tabItemsList.push(this.buildTabItem(item, rawMetadata[item]))
       }
+    },
+    buildTabItem(name, content){
+      let tabItem = {
+        title: null,
+        body: null,
+        confidence: null,
+        extractionMethod: null,
+      }
+
+      if(Array.isArray(content)){
+        tabItem.title = name
+        tabItem.body = content[0].excerpt
+        tabItem.confidence = content[0].confidence[0]*100
+        tabItem.extractionMethod = content[0].technique
+      }
+      else{
+        tabItem.title = name
+        tabItem.body = content.excerpt
+        tabItem.confidence = content.confidence[0]*100
+        tabItem.extractionMethod = content.technique
+      }
+      return tabItem
     }
   },
   created() {

@@ -35,22 +35,28 @@ export default {
         name: 'Unknown',
       },
       {
-        idName: 'github',
+        idName: 'GitHub API',
         icon: 'mdi-github',
         color: 'blue',
         name: 'GitHub API',
       },
       {
-        idName: 'regular-expression',
+        idName: 'Regular expression',
         icon: 'mdi-regex',
         color: 'yellow',
         name: 'Regular Expression',
       },
       {
-        idName: 'header-extraction',
+        idName: 'Header extraction',
         icon: 'mdi-xml',
         color: 'green',
         name: 'Header Extraction',
+      },
+      {
+        idName: 'File Exploration',
+        icon: '',
+        color: '',
+        name: 'File Exploration',
       },
 
     ],

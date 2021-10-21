@@ -4,10 +4,15 @@
         <v-card-title>
           <v-container>
 
-            <v-row justify="space-between;end">
+            <v-row justify="space-between">
               <v-col align-self="center">
                 {{ header.title }}
+                <v-icon color="yellow" size="30">mdi-star-circle</v-icon>
+                <a class="grey--text text-caption">
+                  ({{ header.stars }})
+                </a>
               </v-col>
+
               <v-col align-self="center" md="auto">
                 <last-modify-chip :value="header.lastModify"></last-modify-chip>
               </v-col>
@@ -18,34 +23,22 @@
               </v-col>
             </v-row>
 
-            <v-row align="center">
-              <v-col>
-                <v-rating
-                    :value="1"
-                    v-model="header.rating"
-                    color="amber"
-                    dense
-                    readonly
-                    size="44"
-                ></v-rating>
-                <div class="grey--text ms-4 text-caption">
-                  ({{ header.rating }})
-                </div>
-              </v-col>
-              <v-col cols="10">
-              </v-col>
-
-            </v-row>
-
             <v-row>
               <v-card-subtitle>
-                {{header.owner}}
-                {{header.license}}
+                LAST RELEASE
               </v-card-subtitle>
             </v-row>
             <v-row>
               <v-card-text>
-                {{header.downloadLink}}
+                <div>
+                  {{header.owner}}
+                </div>
+                <div>
+                  {{header.license}}
+                </div>
+                <div>
+                  {{header.downloadLink}}
+                </div>
               </v-card-text>
             </v-row>
           </v-container>
@@ -59,16 +52,18 @@
           <v-tab
               v-for="item in tabItemsList"
               :key="item.title"
+              @click="$vuetify.goTo('#'+item.title)"
           >
             {{ item.title }}
           </v-tab>
         </v-tabs>
 
-        <!-- EXPANSION PANEL TEST -->
+        <!-- Expansion panels -->
         <v-expansion-panels focusable v-model="tabIndex">
           <v-expansion-panel
               v-for="item in tabItemsList"
               :key="item.title"
+              :id="item.title"
           >
             <v-expansion-panel-header>
               <v-row justify="space-between">
@@ -86,8 +81,8 @@
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
-      </v-card>
 
+      </v-card>
 </template>
 
 <script>
@@ -112,7 +107,7 @@ export default {
     tabItemsList: [],
     header:{
       title: "Default Tittle",
-      rating: 3.5,
+      stars: 150,
       downloadLink: "https://example.com",
       owner: "Owner",
       lastModify: new Date(),

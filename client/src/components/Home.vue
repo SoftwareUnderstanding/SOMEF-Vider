@@ -10,6 +10,19 @@
     >
     </metadata-card>
 
+    <!-- Button to top -->
+    <v-btn
+        fab
+        dark
+        fixed
+        bottom
+        right
+        color="primary"
+        @click="$vuetify.goTo(0)"
+    >
+      <v-icon>mdi-arrow-up</v-icon>
+    </v-btn>
+
   </v-container>
 </template>
 

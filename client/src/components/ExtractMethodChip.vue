@@ -43,13 +43,13 @@ export default {
       {
         idName: 'Regular expression',
         icon: 'mdi-regex',
-        color: 'yellow',
+        color: 'purple',
         name: 'Regular Expression',
       },
       {
         idName: 'Header extraction',
         icon: 'mdi-xml',
-        color: 'green',
+        color: 'pink',
         name: 'Header Extraction',
       },
       {

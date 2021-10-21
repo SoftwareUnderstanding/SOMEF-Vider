@@ -15,7 +15,7 @@
           </v-text-field>
         </v-col>
 
-        <v-col cols="2" align-self="center">
+        <v-col cols="2" align-self="center" md="auto">
           <v-text-field
               placeholder="Threshold"
               v-model="threshold"
@@ -26,7 +26,7 @@
           </v-text-field>
         </v-col>
 
-        <v-col cols="2">
+        <v-col cols="2" md="auto">
           <v-btn
               color="primary"
               @click="clickSubmit"

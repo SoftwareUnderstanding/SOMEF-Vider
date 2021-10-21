@@ -1,13 +1,17 @@
 <template>
       <v-card>
-        <!-- Card Title -->
+        <!-- Card Header -->
         <v-card-title>
           <v-container>
-            <v-row justify="space-between">
-              <v-col>
-                TITLE
+
+            <v-row justify="space-between;end">
+              <v-col align-self="center">
+                {{ header.title }}
               </v-col>
-              <v-col cols="1">
+              <v-col align-self="center" md="auto">
+                <last-modify-chip :value="header.lastModify"></last-modify-chip>
+              </v-col>
+              <v-col align-self="center" md="auto">
                 <v-btn icon>
                   <v-icon>mdi-download</v-icon>
                 </v-btn>
@@ -15,22 +19,39 @@
             </v-row>
 
             <v-row align="center">
+              <v-col>
                 <v-rating
-                    value="4"
+                    :value="1"
+                    v-model="header.rating"
                     color="amber"
                     dense
-                    half-increments
                     readonly
-                    size="17"
+                    size="44"
                 ></v-rating>
                 <div class="grey--text ms-4 text-caption">
-                  ({{ 4 }})
+                  ({{ header.rating }})
                 </div>
+              </v-col>
+              <v-col cols="10">
+              </v-col>
+
+            </v-row>
+
+            <v-row>
+              <v-card-subtitle>
+                {{header.owner}}
+                {{header.license}}
+              </v-card-subtitle>
+            </v-row>
+            <v-row>
+              <v-card-text>
+                {{header.downloadLink}}
+              </v-card-text>
             </v-row>
           </v-container>
         </v-card-title>
 
-        <!-- Tab Headers -->
+        <!-- Tab Name -->
         <v-tabs
             v-model="tabIndex"
             show-arrows
@@ -43,41 +64,45 @@
           </v-tab>
         </v-tabs>
 
-        <!-- Tab Content -->
-        <v-tabs-items v-model="tabIndex">
-          <v-tab-item
+        <!-- EXPANSION PANEL TEST -->
+        <v-expansion-panels focusable v-model="tabIndex">
+          <v-expansion-panel
               v-for="item in tabItemsList"
               :key="item.title"
           >
-            <v-card flat>
-              <v-card-text>{{ item.body }}</v-card-text>
-              <confidence-chip :value="item.confidence"></confidence-chip>
-              <extract-method-chip :value="item.extractionMethod"></extract-method-chip>
-
-            </v-card>
-          </v-tab-item>
-        </v-tabs-items>
-
-        <!-- TEST AREA-->
-        <confidence-chip :value="0.35"></confidence-chip>
-        <confidence-chip :value="63.2"></confidence-chip>
-        <confidence-chip :value="90"></confidence-chip>
-        <extract-method-chip value="github"></extract-method-chip>
-        <extract-method-chip value="regular-expression"></extract-method-chip>
-        <extract-method-chip value="asdf"></extract-method-chip>
-
+            <v-expansion-panel-header>
+              <v-row justify="space-between">
+                <v-col md="auto" align-self="center">
+                  {{item.title}}
+                </v-col>
+                <v-col cols="3" md="auto">
+                  <confidence-chip :value="item.confidence"></confidence-chip>
+                  <extract-method-chip :value="item.extractionMethod"></extract-method-chip>
+                </v-col>
+              </v-row>
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              {{item.body}}
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-card>
+
 </template>
 
 <script>
 import ConfidenceChip from "@/components/ConfidenceChip";
 import ExtractMethodChip from "@/components/ExtractMethodChip";
+import LastModifyChip from "@/components/LastModifyChip";
+
+const METADATA_FIELDS_FOR_HEADER = ['codeRepository','dateModified','downloadUrl','license','license_file','long_title','name','owner','ownerType'];
 
 export default {
   name: "MetadataCard",
   components:{
     ConfidenceChip,
     ExtractMethodChip,
+    LastModifyChip,
   },
   props: {
     metadata: null,
@@ -85,12 +110,31 @@ export default {
   data: () => ({
     tabIndex: null,
     tabItemsList: [],
+    header:{
+      title: "Default Tittle",
+      rating: 3.5,
+      downloadLink: "https://example.com",
+      owner: "Owner",
+      lastModify: new Date(),
+      license: "LICENSE EXAMPLE",
+    }
   }),
   methods:{
     generateTabs(rawMetadata) {
+      let headerItemsList = []
       for(let item in rawMetadata){
-        this.tabItemsList.push(this.buildTabItem(item, rawMetadata[item]))
+        if(this.isHeaderITem(item)){
+          headerItemsList.push(rawMetadata[item])
+        }
+        else{
+          this.tabItemsList.push(this.buildTabItem(item, rawMetadata[item]))
+        }
       }
+      this.buildHeader(headerItemsList)
+    },
+    buildHeader(headerItemsList){
+      // TODO finish method
+      this.header.testList = headerItemsList
     },
     buildTabItem(name, content){
       let tabItem = {
@@ -113,7 +157,14 @@ export default {
         tabItem.extractionMethod = content.technique
       }
       return tabItem
-    }
+    },
+    isHeaderITem(name){
+      let find = false;
+      for(let i=0; i<METADATA_FIELDS_FOR_HEADER.length && !find; i++){
+        find = METADATA_FIELDS_FOR_HEADER[i] === name
+      }
+      return find
+    },
   },
   created() {
     this.generateTabs(this.metadata)

@@ -77,7 +77,13 @@
               </v-row>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              {{item.body}}
+              <editor v-if="item.title === 'citation'"
+                  mode="viewer"
+                  v-model="item.body"
+              />
+              <div v-else>
+                {{item.body}}
+              </div>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -89,6 +95,7 @@
 import ConfidenceChip from "@/components/ConfidenceChip";
 import ExtractMethodChip from "@/components/ExtractMethodChip";
 import LastModifyChip from "@/components/LastModifyChip";
+import { Editor } from "vuetify-markdown-editor";
 
 const METADATA_FIELDS_FOR_HEADER = ['codeRepository','dateModified','downloadUrl','license','license_file','long_title','name','owner','ownerType'];
 
@@ -98,6 +105,7 @@ export default {
     ConfidenceChip,
     ExtractMethodChip,
     LastModifyChip,
+    Editor
   },
   props: {
     metadata: null,

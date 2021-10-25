@@ -2,48 +2,21 @@
   <v-container>
 
     <div class="about-section">
-      <h1>About Us Page</h1>
-      <p>Some text about who we are and what we do.</p>
-      <p>Resize the browser window to see that this page is responsive by the way.</p>
+      <div class="jumbotron">
+        <h1 class = "display-4">About Page</h1>
+        <hr class = "my-4">
+        <p>With an increase of complex scientific software, researchers need to spend a large portion of their time searching for avaliable software documentation and source code, and reading it to understand the software used and the proper way to cite it. SoMEF is designed to help highlight the most significant aspects of the scientific documentation by processing GitHub repositories.</p>
+      </div>
     </div>
 
-    <h2 style="text-align:center">Our Team</h2>
+    <h2 class="center">Developers of this Project</h2>
+
     <div class="row">
-      <div class="column">
-        <div class="card">
-          <img src="/w3images/team1.jpg" alt="Jane" style="width:100%">
-          <div class="container">
-            <h2>Jane Doe</h2>
-            <p class="title">CEO & Founder</p>
-            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-            <p>jane@example.com</p>
-            <p><button class="button">Contact</button></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="column">
-        <div class="card">
-          <img src="/w3images/team2.jpg" alt="Mike" style="width:100%">
-          <div class="container">
-            <h2>Mike Ross</h2>
-            <p class="title">Art Director</p>
-            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-            <p>mike@example.com</p>
-            <p><button class="button">Contact</button></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="column">
-        <div class="card">
-          <img src="/w3images/team3.jpg" alt="John" style="width:100%">
-          <div class="container">
-            <h2>John Doe</h2>
-            <p class="title">Designer</p>
-            <p>Some text that describes me lorem ipsum ipsum lorem.</p>
-            <p>john@example.com</p>
-            <p><button class="button">Contact</button></p>
+      <div class="col-sm-4">
+        <div class = card>
+          <div class="card-body">
+            <h5 class="card-title h5">Victor Fernandez-Lancha Aranda</h5>
+            <p class="card-text">v.faranda@alumnos.upm.es</p>
           </div>
         </div>
       </div>

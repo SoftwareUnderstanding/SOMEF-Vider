@@ -68,7 +68,7 @@
 
 <script>
 import MetadataCard from "@/components/MetadataCard";
-import axiosService from "@/service/somefWebAppService";
+import axiosService from "@/service/axiosService";
 
 export default {
   name: 'Home',

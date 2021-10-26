@@ -1,10 +1,11 @@
 <template>
   <v-app>
     <v-main>
-      <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
-      </div>
+      <v-breadcrumbs
+          :items="navBar"
+          divider="|"
+      >
+      </v-breadcrumbs>
       <router-view/>
     </v-main>
   </v-app>
@@ -16,7 +17,18 @@ export default {
   name: 'App',
 
   data: () => ({
-    //
+    navBar:[
+      {
+        text: 'Home',
+        disabled: false,
+        href: '/#/',
+      },
+      {
+        text: 'About',
+        disabled: false,
+        href: '/#/about',
+      },
+    ],
   }),
 };
 </script>

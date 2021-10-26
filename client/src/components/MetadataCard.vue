@@ -99,13 +99,13 @@
               </v-row>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <editor v-if="item.title === 'citation'"
-                  mode="viewer"
-                  v-model="item.body"
+              <editor
+                      mode="viewer"
+                      v-model="item.body"
               />
-              <div v-else>
-                {{item.body}}
-              </div>
+              <div v-if="item.title === 'citation'" v-html="parseCitation(item.body)"></div>
+              <v-subheader>DEFALUT VALUE</v-subheader>
+              <v-card-text>{{item.body}}</v-card-text>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -118,6 +118,7 @@ import ConfidenceChip from "@/components/ConfidenceChip";
 import ExtractMethodChip from "@/components/ExtractMethodChip";
 import LastModifyChip from "@/components/LastModifyChip";
 import { Editor } from "vuetify-markdown-editor";
+import Cite from "citation-js";
 
 const METADATA_FIELDS_FOR_HEADER = ['codeRepository','dateModified','description','downloadUrl','license','license_file','long_title','name','owner','ownerType'];
 
@@ -193,6 +194,15 @@ export default {
       }
       return find
     },
+    parseCitation(data){
+      let html = new Cite(data).format('bibliography', {
+        format: 'html',
+        template: 'citation-apa',
+        lang: 'en-US'
+      })
+      console.log(html)
+      return html
+    }
   },
   created() {
     this.generateTabs(this.metadata)

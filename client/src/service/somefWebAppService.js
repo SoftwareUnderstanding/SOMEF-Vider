@@ -1,10 +1,18 @@
 import Axios from "axios";
 
 export default {
-    getTest
+    getMetadata
 }
-export const localPath = "http://127.0.0.1:5000/"
+export const LOCAL_URL = "http://127.0.0.1:5000/"
 
-function getTest(){
-    return Axios.get(localPath + 'test')
+function getMetadata(url, threshold, ignoreClassifiers) {
+    return Axios({
+        method: 'GET',
+        url: LOCAL_URL + 'metadata',
+        params: {
+            url: url,
+            threshold: threshold,
+            ignoreClassifiers: ignoreClassifiers
+        }
+    });
 }

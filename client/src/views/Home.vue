@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import Axios from "axios";
 import MetadataCard from "@/components/MetadataCard";
 import FormCard from "@/components/FormCard";
+import somefWebAppService from "@/service/somefWebAppService";
 
 export default {
   name: 'Home',
@@ -43,13 +43,13 @@ export default {
     metadata: {},
     loading: false,
     showMetadataCard: false,
-    url: null,
+    url: 'https://github.com/KnowledgeCaptureAndDiscovery/widoco',
     threshold: 0.8,
-    ignoreClassifiers: false,
+    ignoreClassifiers: true,
   }),
   methods:{
-    fetchMetadata() {
-      Axios.get("http://127.0.0.1:5000/test")
+    fetchMetadata(url, threshold, ignoreClassifiers) {
+      somefWebAppService.getMetadata(url, threshold, ignoreClassifiers)
           .then(response => {
             console.log(response.data)
             this.metadata = response.data

@@ -1,48 +1,70 @@
 <template>
       <v-card>
         <!-- Card Header -->
-        <v-card-title>
           <v-container>
 
-            <v-row justify="space-between">
-              <v-col align-self="center">
-                {{ header.title }}
-                <v-icon color="yellow" size="30">mdi-star-circle</v-icon>
-                <a class="grey--text text-caption">
-                  ({{ header.stars }})
-                </a>
-              </v-col>
+            <v-card-title>
+              <v-row justify="space-between">
+                <v-col align-self="center">
+                  {{ header.title }}
+                  <v-icon color="yellow" size="30">mdi-star-circle</v-icon>
+                  <a class="grey--text text-caption">
+                    ({{ header.stars }})
+                  </a>
+                </v-col>
+                <v-col align-self="center" md="auto">
+                  <v-btn icon>
+                    <v-icon>mdi-download</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-card-title>
 
-              <v-col align-self="center" md="auto">
-                <last-modify-chip :value="header.lastModify"></last-modify-chip>
-              </v-col>
-              <v-col align-self="center" md="auto">
-                <v-btn icon>
-                  <v-icon>mdi-download</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
+            <v-card-subtitle>
+              <v-container fluid>
+                <v-row>
+                  <v-col>
+                    <v-card-text>
+                      {{ header.sortDescription }}
+                    </v-card-text>
+                  </v-col>
+                </v-row>
+                <v-row dense no-gutters>
+                  <v-col cols="2" align-self="center">
+                    <v-subheader>Last Release:</v-subheader>
+                  </v-col>
+                  <v-col align-self="center">
+                    {{header.releaseLast}}
+                  </v-col>
+                </v-row>
+                <v-row dense no-gutters>
+                  <v-col cols="2" align-self="center">
+                    <v-subheader>Releases:</v-subheader>
+                  </v-col>
+                  <v-col align-self="center">
+                    {{header.releaseTotal}}
+                  </v-col>
+                </v-row>
+                <v-row dense no-gutters>
+                  <v-col cols="2" align-self="center">
+                    <v-subheader>Last Update:</v-subheader>
+                  </v-col>
+                  <v-col align-self="center">
+                    <last-modify-chip :value="header.dateLastModify"></last-modify-chip>
+                  </v-col>
+                </v-row>
+                <v-row dense no-gutters>
+                  <v-col cols="2" align-self="center">
+                    <v-subheader>License:</v-subheader>
+                  </v-col>
+                  <v-col align-self="center">
+                    {{header.license}}
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-subtitle>
 
-            <v-row>
-              <v-card-subtitle>
-                LAST RELEASE
-              </v-card-subtitle>
-            </v-row>
-            <v-row>
-              <v-card-text>
-                <div>
-                  {{header.owner}}
-                </div>
-                <div>
-                  {{header.license}}
-                </div>
-                <div>
-                  {{header.downloadLink}}
-                </div>
-              </v-card-text>
-            </v-row>
           </v-container>
-        </v-card-title>
 
         <!-- Tab Name -->
         <v-tabs
@@ -97,7 +119,7 @@ import ExtractMethodChip from "@/components/ExtractMethodChip";
 import LastModifyChip from "@/components/LastModifyChip";
 import { Editor } from "vuetify-markdown-editor";
 
-const METADATA_FIELDS_FOR_HEADER = ['codeRepository','dateModified','downloadUrl','license','license_file','long_title','name','owner','ownerType'];
+const METADATA_FIELDS_FOR_HEADER = ['codeRepository','dateModified','description','downloadUrl','license','license_file','long_title','name','owner','ownerType'];
 
 export default {
   name: "MetadataCard",
@@ -116,10 +138,13 @@ export default {
     header:{
       title: "Default Tittle",
       stars: 150,
-      downloadLink: "https://example.com",
+      releaseLast: '0.5.2',
+      releaseTotal: 7,
+      sortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas venenatis sit amet purus nec pellentesque.verra elementum.",
       owner: "Owner",
-      lastModify: new Date(),
-      license: "LICENSE EXAMPLE",
+      license: "MIT License",
+      dateLastModify: new Date(),
+      dateCreation: new Date(),
     }
   }),
   methods:{

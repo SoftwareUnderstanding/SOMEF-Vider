@@ -1,10 +1,50 @@
 <template>
   <v-container>
-    <form-card :click-submit="clickSubmit"
-               :loading="loading"
-               :threshold="threshold"
-               :url="url">
-    </form-card>
+    <v-card flat>
+      <v-card-title class="text-center justify-center">
+        Software Metadata Extraction
+      </v-card-title>
+      <v-form ref="form">
+        <v-row justify="space-between">
+
+          <v-col align-self="center">
+            <v-text-field
+                placeholder="https://github.com/KnowledgeCaptureAndDiscovery/somef/"
+                :outlined="true"
+                v-model="url"
+                :rules="urlRules"
+                required
+                label="GitHub URL"
+            >
+            </v-text-field>
+          </v-col>
+
+          <v-col cols="2" align-self="center" md="auto">
+            <v-text-field
+                placeholder="Threshold"
+                required
+                v-model="threshold"
+                :disabled="true"
+                type='number'
+                :outlined="true"
+                label="Threshold"
+            >
+            </v-text-field>
+          </v-col>
+
+          <v-col cols="2" md="auto">
+            <v-btn
+                color="primary"
+                @click="clickSubmit"
+                :loading="loading"
+            >
+              SUBMIT
+            </v-btn>
+          </v-col>
+
+        </v-row>
+      </v-form>
+    </v-card>
     <metadata-card v-if="showMetadataCard"
                    :metadata="testMetadata"
     >
@@ -28,13 +68,11 @@
 
 <script>
 import MetadataCard from "@/components/MetadataCard";
-import FormCard from "@/components/FormCard";
-import somefWebAppService from "@/service/somefWebAppService";
+import axiosService from "@/service/somefWebAppService";
 
 export default {
   name: 'Home',
   components: {
-    FormCard,
     MetadataCard,
   },
 
@@ -43,13 +81,17 @@ export default {
     metadata: {},
     loading: false,
     showMetadataCard: false,
-    url: 'https://github.com/KnowledgeCaptureAndDiscovery/widoco',
+    url: null,
     threshold: 0.8,
     ignoreClassifiers: true,
+    urlRules: [
+        v => !!v || 'GitHub URL is required',
+        //v => /^(https?:\\)?([\da-z.-]+)\.([a-z.]{2,6})([\\w .-]*)*\?$/.test(v) || 'Must be valid url',
+      ],
   }),
   methods:{
     fetchMetadata(url, threshold, ignoreClassifiers) {
-      somefWebAppService.getMetadata(url, threshold, ignoreClassifiers)
+      axiosService.getMetadata(url, threshold, ignoreClassifiers)
           .then(response => {
             console.log(response.data)
             this.metadata = response.data
@@ -60,6 +102,8 @@ export default {
           })
     },
     clickSubmit(){
+      if (!this.$refs.form.validate()) return
+
       this.loading = true
       this.showMetadataCard = false
       this.fetchMetadata(this.url, this.threshold, this.ignoreClassifiers)

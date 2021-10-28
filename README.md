@@ -1,8 +1,8 @@
-# Metavider
+# SOMEF Vider
 Web application for [SOMEF](https://github.com/KnowledgeCaptureAndDiscovery/somef)
 
 ## Description
-Metavider is a web application based on Vue.js and Flask to visualize the metadata retrieved from the
+SOMEF Vider is a web application based on Vue.js and Flask to visualize the metadata retrieved from the
 SOMEF API.
 
 
@@ -19,13 +19,13 @@ from each other.
 
 Clone this repository
 ```
-$ git clone https://github.com/Vitoriox/SOMEF-WebApp.git      
+$ git clone https://github.com/Vitoriox/SOMEF-Vider.git      
 ```
 
 #### Client
 Install dependencies for client
 ```
-$ cd SOMEF-WebApp/client/
+$ cd SOMEF-Vider/client/
 ```
 ```
 $ npm install
@@ -38,7 +38,7 @@ $ npm run serve
 #### Service
 Install dependencies for server
 ```
-$ cd SOMEF-WebApp/server/
+$ cd SOMEF-Vider/server/
 ```
 ```
 $ python3 -m venv virtualenv/

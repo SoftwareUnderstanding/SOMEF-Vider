@@ -2,7 +2,7 @@
   <v-container>
     <v-card flat>
       <v-card-title class="text-center justify-center">
-        Software Metadata Extraction
+        SOMEF Vider
       </v-card-title>
       <v-form ref="form">
         <v-row justify="space-between">

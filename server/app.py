@@ -1,9 +1,14 @@
-from flask import Flask, request
+from flask import Flask, request, render_template, send_file
 from somef.cli import cli_get_data
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 @app.route('/metadata')
@@ -17,7 +22,6 @@ def get_metadata():
 
 @app.route('/test')
 def test():
-
     return cli_get_data(0.8, True, repo_url='https://github.com/KnowledgeCaptureAndDiscovery/somef')
 
 

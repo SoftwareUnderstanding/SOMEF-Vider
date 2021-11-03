@@ -22,7 +22,7 @@ def get_metadata():
 
 @app.route('/test')
 def test():
-    return cli_get_data(0.8, True, repo_url='https://github.com/KnowledgeCaptureAndDiscovery/somef')
+    return cli_get_data(0.8, False, repo_url='https://github.com/KnowledgeCaptureAndDiscovery/somef')
 
 
 if __name__ == '__main__':

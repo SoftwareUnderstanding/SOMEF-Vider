@@ -13,7 +13,7 @@ from each other.
 ### Dependencies
 
 * npm 6.14.8
-* Python 3.7.3
+* Python 3.9
 
 ### Installation
 
@@ -41,13 +41,13 @@ Install dependencies for server
 $ cd SOMEF-Vider/server/
 ```
 ```
-$ python3 -m venv virtualenv/
+$ python3.9 -m venv virtualenv/
 $ source virtualenv/bin/activate 
-(virtualenv) $ python3 -m pip install -r requirements.txt
+(virtualenv) $ python -m pip install -r requirements.txt
 ```
 Run service
 ```
-(virtualenv) $ python3 app.py
+(virtualenv) $ python app.py
 ```
 
 

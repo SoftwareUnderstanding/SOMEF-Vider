@@ -51,17 +51,24 @@
     </metadata-card>
 
     <!-- Button to top -->
-    <v-btn
-        fab
-        dark
-        fixed
-        bottom
-        right
-        color="primary"
-        @click="$vuetify.goTo(0)"
-    >
-      <v-icon>mdi-arrow-up</v-icon>
-    </v-btn>
+    <v-tooltip left>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+            v-bind="attrs"
+            v-on="on"
+            fab
+            dark
+            fixed
+            bottom
+            right
+            color="primary"
+            @click="$vuetify.goTo(0)"
+        >
+          <v-icon>mdi-arrow-up</v-icon>
+        </v-btn>
+      </template>
+      <span>Go to top</span>
+    </v-tooltip>
 
   </v-container>
 </template>

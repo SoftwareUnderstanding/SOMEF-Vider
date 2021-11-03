@@ -5,13 +5,13 @@
           v-bind="attrs"
           v-on="on"
           class="ma-2"
-          :color="colorRenderer()"
+          :color="color"
           text-color="white"
       >
         <v-icon>
           mdi-alpha-c-circle
         </v-icon>
-        {{value}}%
+        {{percentageValue}}
       </v-chip>
     </template>
     <span>Confidence</span>
@@ -27,20 +27,23 @@ export default {
       default: 0,
     }
   },
-  methods: {
-    colorRenderer(){
-      if(this.value < 50){
+  computed:{
+    color: function () {
+      if(this.value < 0.5){
         return 'red'
       }
-      else if(50 < this.value  && this.value < 75){
+      else if(0.5 < this.value  && this.value < 0.75){
         return 'orange'
       }
-      else if(75 < this.value){
+      else if(0.75 < this.value){
         return 'green'
       }
       else{
         return 'inherit'
       }
+    },
+    percentageValue: function (){
+      return new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 4 }).format(this.value*100) + '%'
     }
   }
 }

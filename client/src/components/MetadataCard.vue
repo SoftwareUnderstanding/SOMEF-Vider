@@ -176,13 +176,13 @@ export default {
       if(Array.isArray(content)){
         tabItem.title = name
         tabItem.body = content[0].excerpt
-        tabItem.confidence = content[0].confidence[0]*100
+        tabItem.confidence = content[0].confidence[0]
         tabItem.extractionMethod = content[0].technique
       }
       else{
         tabItem.title = name
         tabItem.body = content.excerpt
-        tabItem.confidence = content.confidence[0]*100
+        tabItem.confidence = content.confidence[0]
         tabItem.extractionMethod = content.technique
       }
       return tabItem

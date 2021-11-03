@@ -58,6 +58,12 @@ export default {
         color: 'brown',
         name: 'File Exploration',
       },
+      {
+        idName: 'Supervised classification',
+        icon: 'mdi-robot',
+        color: '#8DB3E2',
+        name: 'Supervised Classification',
+      },
 
     ],
     methodItem:{

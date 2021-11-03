@@ -47,7 +47,7 @@ $ source virtualenv/bin/activate
 ```
 Run service
 ```
-(virtualenv) $ python app.py
+(virtualenv) $ python -m flask run
 ```
 
 

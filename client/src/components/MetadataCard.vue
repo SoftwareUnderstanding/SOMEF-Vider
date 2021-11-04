@@ -200,7 +200,6 @@ export default {
         template: 'citation-apa',
         lang: 'en-US'
       })
-      console.log(html)
       return html
     }
   },

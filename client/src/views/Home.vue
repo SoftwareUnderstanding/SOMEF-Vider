@@ -12,7 +12,7 @@
                 placeholder="example: https://github.com/KnowledgeCaptureAndDiscovery/somef/"
                 :outlined="true"
                 v-model="url"
-                :rules="urlRules"
+                :rules="rules.urlRules"
                 required
                 label="GitHub URL"
             >
@@ -22,8 +22,12 @@
           <v-col cols="2" align-self="center" md="auto">
             <v-text-field
                 placeholder="Threshold"
+                :max="1"
+                :min="0"
+                :step="0.1"
                 required
                 v-model="threshold"
+                :rules="rules.thresholdRules"
                 type='number'
                 :outlined="true"
                 label="Threshold"
@@ -99,12 +103,18 @@ export default {
     showErrorDialog: false,
     serverResponse: null,
     url: null,
-    threshold: 0.8,
+    threshold: null,
     ignoreClassifiers: 0,
-    urlRules: [
+    rules:{
+      urlRules: [
         v => !!v || 'GitHub URL is required',
         //v => /^(https?:\\)?([\da-z.-]+)\.([a-z.]{2,6})([\\w .-]*)*\?$/.test(v) || 'Must be valid url',
       ],
+      thresholdRules:[
+        v => !!v || 'Threshold is required',
+        v => (0 <= v && v <= 1) || 'Threshold must be between 0 and 1',
+      ],
+    },
   }),
   methods:{
     fetchMetadata(url, threshold, ignoreClassifiers) {

@@ -1,0 +1,4 @@
+.idea
+.vscode
+server/venv
+client/node_modules

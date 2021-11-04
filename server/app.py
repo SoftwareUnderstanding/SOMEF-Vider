@@ -13,18 +13,13 @@ def index():
 
 @app.route('/metadata')
 def get_metadata():
-    threshold = request.args.get('threshold')
-    if not validate_threshold(threshold):
+    threshold = parse_threshold(request.args.get('threshold'))
+    if threshold is None:
         return "Threshold is not Valid", 400
 
-    ignore_classifiers = request.args.get('ignoreClassifiers')
-    if ignore_classifiers != 'True' \
-            and ignore_classifiers != 'False'\
-            and ignore_classifiers != '0'\
-            and ignore_classifiers != '1':
+    ignore_classifiers = parse_ignore_classifiers(request.args.get('ignoreClassifiers'))
+    if ignore_classifiers is None:
         return "Ignore Classifiers flag is not a boolean", 400
-    else:
-        ignore_classifiers = bool(ignore_classifiers)
 
     url = request.args.get('url')
     if url.find("https://github.com/") != 0:
@@ -34,7 +29,7 @@ def get_metadata():
     if metadata is None:
         return "GitHub repository is not valid", 400
     else:
-        return metadata, 200
+        return metadata
 
 
 @app.route('/test')
@@ -42,15 +37,24 @@ def test():
     return cli_get_data(0.8, False, repo_url='https://github.com/KnowledgeCaptureAndDiscovery/somef')
 
 
-def validate_threshold(threshold):
+def parse_threshold(value):
     try:
-        threshold = float(threshold)
-        if threshold < 0 or threshold > 1:
-            return False
+        threshold = float(value)
+        if 0 <= threshold <= 1:
+            return threshold
     except ValueError:
-        return False
+        return None
 
-    return True
+    return None
+
+
+def parse_ignore_classifiers(value):
+    if value == 'true':
+        return True
+    elif value == 'false':
+        return False
+    else:
+        return None
 
 
 if __name__ == '__main__':

@@ -40,6 +40,7 @@
                 color="primary"
                 @click="clickSubmit"
                 :loading="loading"
+                :disabled="loading"
             >
               SUBMIT
             </v-btn>
@@ -104,7 +105,7 @@ export default {
     serverResponse: null,
     url: null,
     threshold: null,
-    ignoreClassifiers: 0,
+    ignoreClassifiers: false,
     rules:{
       urlRules: [
         v => !!v || 'GitHub URL is required',
@@ -120,11 +121,13 @@ export default {
     fetchMetadata(url, threshold, ignoreClassifiers) {
       axiosService.getMetadata(url, threshold, ignoreClassifiers)
           .then(response => {
+            console.log(response.data)
             this.metadata = response.data
             this.loading = false
             this.showMetadataCard = true
           })
           .catch(error => {
+            console.log(error.response)
             this.loading = false
             this.serverResponse = error.response
             this.showErrorDialog = true

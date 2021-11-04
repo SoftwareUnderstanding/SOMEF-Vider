@@ -32,10 +32,12 @@ export default {
   name: "ServerResponseDialog",
   props:{
     response: {
-      default: {
-        data: null,
-        status: null,
-        statusText: null,
+      default(){
+        return{
+          data: null,
+          status: null,
+          statusText: null,
+        }
       }
     },
     showDialog:{

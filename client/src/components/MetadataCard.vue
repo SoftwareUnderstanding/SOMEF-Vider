@@ -87,6 +87,8 @@
               :key="item.name"
               :id="item.name"
           >
+
+            <!-- Panel Header -->
             <v-expansion-panel-header>
               <v-row justify="space-between">
                 <v-col md="auto" align-self="center">
@@ -103,34 +105,47 @@
                 </v-col>
               </v-row>
             </v-expansion-panel-header>
+
+            <!-- Panel Content -->
             <v-expansion-panel-content>
+              <!-- Array Content -->
               <v-carousel
                   height="auto"
                   hide-delimiters
                   :show-arrows = "item.body.length > 1"
+                  v-if="Array.isArray(item.body)"
               >
                 <v-carousel-item
-                    v-for="bodySubItem in item.body"
-                    :key="bodySubItem.name"
+                    v-for="subItem in item.body"
+                    :key="subItem.name"
                 >
                   <v-container>
                     <v-row justify="center">
                       <v-col cols="11">
                         <editor
                             mode="viewer"
-                            v-model="bodySubItem.body"
+                            v-model="subItem.body"
                         />
-                        <div v-if="item.name === 'citation'" v-html="parseCitation(bodySubItem.body)"></div>
-
-                        <br/>
-                        <div>DEFAULT VALUE</div>
-                        <div>{{ bodySubItem.body }}</div>
-
+                        <div v-if="item.name === 'citation'" v-html="parseCitation(subItem.body)"></div>
                       </v-col>
                     </v-row>
                   </v-container>
                 </v-carousel-item>
               </v-carousel>
+
+              <!-- String Content -->
+              <v-container v-else>
+                <v-row justify="center">
+                  <v-col cols="11">
+                    <editor
+                        mode="viewer"
+                        v-model="item.body"
+                    />
+                    <div v-if="item.name === 'citation'" v-html="parseCitation(item.body)"></div>
+                  </v-col>
+                </v-row>
+              </v-container>
+
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -145,7 +160,17 @@ import LastModifyChip from "@/components/LastModifyChip";
 import { Editor } from "vuetify-markdown-editor";
 import Cite from "citation-js";
 
-const METADATA_FIELDS_FOR_HEADER = ['codeRepository','dateModified','description','downloadUrl','license','license_file','long_title','name','owner','ownerType'];
+const METADATA_FIELDS_FOR_HEADER =
+    ['codeRepository',
+      'dateModified',
+      'description',
+      'downloadUrl',
+      'license',
+      'license_file',
+      'long_title',
+      'name',
+      'owner',
+      'ownerType'];
 
 export default {
   name: "MetadataCard",

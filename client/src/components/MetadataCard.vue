@@ -72,29 +72,34 @@
             show-arrows
         >
           <v-tab
-              v-for="item in tabItemsList"
-              :key="item.title"
-              @click="$vuetify.goTo('#'+item.title)"
+              v-for="item in panelItemsList"
+              :key="item.name"
+              @click="$vuetify.goTo('#'+item.name)"
           >
-            {{ item.title }}
+            {{ item.name }}
           </v-tab>
         </v-tabs>
 
         <!-- Expansion panels -->
         <v-expansion-panels focusable v-model="tabIndex">
           <v-expansion-panel
-              v-for="item in tabItemsList"
-              :key="item.title"
-              :id="item.title"
+              v-for="item in panelItemsList"
+              :key="item.name"
+              :id="item.name"
           >
             <v-expansion-panel-header>
               <v-row justify="space-between">
                 <v-col md="auto" align-self="center">
-                  {{item.title}}
+                  {{item.name}}
                 </v-col>
                 <v-col cols="3" md="auto">
                   <confidence-chip :value="item.confidence"></confidence-chip>
-                  <extract-method-chip :value="item.extractionMethod"></extract-method-chip>
+                  <extract-method-chip
+                      v-for="method in item.extractionMethods"
+                      :value="method"
+                      :key="item.name+'-'+method"
+                      >
+                  </extract-method-chip>
                 </v-col>
               </v-row>
             </v-expansion-panel-header>
@@ -104,8 +109,6 @@
                       v-model="item.body"
               />
               <div v-if="item.title === 'citation'" v-html="parseCitation(item.body)"></div>
-              <v-subheader>DEFALUT VALUE</v-subheader>
-              <v-card-text>{{item.body}}</v-card-text>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -135,7 +138,7 @@ export default {
   },
   data: () => ({
     tabIndex: null,
-    tabItemsList: [],
+    panelItemsList: [],
     header:{
       title: "Default Tittle",
       stars: 150,
@@ -156,7 +159,7 @@ export default {
           headerItemsList.push(rawMetadata[item])
         }
         else{
-          this.tabItemsList.push(this.buildTabItem(item, rawMetadata[item]))
+          this.panelItemsList.push(this.buildPanelItem(item, rawMetadata[item]))
         }
       }
       this.buildHeader(headerItemsList)
@@ -165,28 +168,36 @@ export default {
       // TODO finish method
       this.header.testList = headerItemsList
     },
-    buildTabItem(name, content){
-      let tabItem = {
-        title: null,
-        body: null,
+    buildPanelItem(name, somefItem){
+      let panelItem = {
+        name: null,
+        body: [],
         confidence: null,
-        extractionMethod: null,
+        extractionMethods: new Set,
       }
 
-      if(Array.isArray(content)){
-        tabItem.title = name
-        tabItem.body = content[0].excerpt
-        tabItem.confidence = content[0].confidence[0]
-        tabItem.extractionMethod = content[0].technique
+      if(Array.isArray(somefItem)){
+        let averageConfidence = 0
+        for(let i=0; i<somefItem.length; i++){
+          panelItem.body.push(this.buildPanelItem(i+'-'+name, somefItem[i]))
+          averageConfidence = averageConfidence + Number(somefItem[i].confidence[0])
+          panelItem.extractionMethods.add(somefItem[i].technique)
+        }
+        averageConfidence = averageConfidence / somefItem.length
+
+        panelItem.name = name
+        panelItem.confidence = averageConfidence
       }
       else{
-        tabItem.title = name
-        tabItem.body = content.excerpt
-        tabItem.confidence = content.confidence[0]
-        tabItem.extractionMethod = content.technique
+        panelItem.name = name
+        panelItem.body = [somefItem.excerpt.toString()]
+        panelItem.confidence = somefItem.confidence[0]
+        panelItem.extractionMethods = new Set().add(somefItem.technique)
       }
-      return tabItem
+
+      return panelItem
     },
+
     isHeaderITem(name){
       let find = false;
       for(let i=0; i<METADATA_FIELDS_FOR_HEADER.length && !find; i++){

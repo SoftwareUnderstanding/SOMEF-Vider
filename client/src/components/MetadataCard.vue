@@ -104,11 +104,33 @@
               </v-row>
             </v-expansion-panel-header>
             <v-expansion-panel-content>
-              <editor
-                      mode="viewer"
-                      v-model="item.body"
-              />
-              <div v-if="item.title === 'citation'" v-html="parseCitation(item.body)"></div>
+              <v-carousel
+                  height="auto"
+                  hide-delimiters
+                  :show-arrows = "item.body.length > 1"
+              >
+                <v-carousel-item
+                    v-for="bodySubItem in item.body"
+                    :key="bodySubItem.name"
+                >
+                  <v-container>
+                    <v-row justify="center">
+                      <v-col cols="11">
+                        <editor
+                            mode="viewer"
+                            v-model="bodySubItem.body"
+                        />
+                        <div v-if="item.name === 'citation'" v-html="parseCitation(bodySubItem.body)"></div>
+
+                        <br/>
+                        <div>DEFAULT VALUE</div>
+                        <div>{{ bodySubItem.body }}</div>
+
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-carousel-item>
+              </v-carousel>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -190,7 +212,7 @@ export default {
       }
       else{
         panelItem.name = name
-        panelItem.body = [somefItem.excerpt.toString()]
+        panelItem.body = somefItem.excerpt.toString()
         panelItem.confidence = somefItem.confidence[0]
         panelItem.extractionMethods = new Set().add(somefItem.technique)
       }
@@ -206,12 +228,15 @@ export default {
       return find
     },
     parseCitation(data){
-      let html = new Cite(data).format('bibliography', {
-        format: 'html',
-        template: 'citation-apa',
-        lang: 'en-US'
-      })
-      return html
+      if(typeof data === 'string' || data instanceof String) {
+        if(data.charAt(0) === '@'){
+          return new Cite(data).format('bibliography', {
+            format: 'html',
+            template: 'citation-apa',
+            lang: 'en-US'
+          })
+        }
+      }
     }
   },
   created() {

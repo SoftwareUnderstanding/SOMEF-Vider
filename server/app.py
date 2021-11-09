@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, send_file
+from flask import Flask, request, render_template, send_file, send_from_directory
 from somef.cli import cli_get_data
 from flask_cors import CORS
 
@@ -8,7 +8,17 @@ CORS(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return send_from_directory('static/index.html')
+
+
+@app.route('/js/<path:filename>')
+def serve_static_js(filename):
+    return send_from_directory('static/js', filename)
+
+
+@app.route('/css/<path:filename>')
+def serve_static_css(filename):
+    return send_from_directory('static/css', filename)
 
 
 @app.route('/metadata')

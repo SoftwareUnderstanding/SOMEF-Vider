@@ -2,7 +2,6 @@
       <v-card>
         <!-- Card Header -->
           <v-container>
-
             <v-card-title>
               <v-row justify="space-between">
                 <v-col align-self="center">
@@ -63,10 +62,9 @@
                 </v-row>
               </v-container>
             </v-card-subtitle>
-
           </v-container>
 
-        <!-- Tab Name -->
+        <!-- Tabs Names -->
         <v-tabs
             v-model="tabIndex"
             show-arrows
@@ -122,11 +120,11 @@
                   <v-container>
                     <v-row justify="center">
                       <v-col cols="11">
+                        <div v-if="item.name === 'citation'" v-html="parseCitation(subItem.body)"></div>
                         <editor
                             mode="viewer"
                             v-model="subItem.body"
                         />
-                        <div v-if="item.name === 'citation'" v-html="parseCitation(subItem.body)"></div>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -137,11 +135,11 @@
               <v-container v-else>
                 <v-row justify="center">
                   <v-col cols="11">
+                    <div v-if="item.name === 'citation'" v-html="parseCitation(item.body)"></div>
                     <editor
                         mode="viewer"
                         v-model="item.body"
                     />
-                    <div v-if="item.name === 'citation'" v-html="parseCitation(item.body)"></div>
                   </v-col>
                 </v-row>
               </v-container>
@@ -160,17 +158,30 @@ import LastModifyChip from "@/components/LastModifyChip";
 import { Editor } from "vuetify-markdown-editor";
 import Cite from "citation-js";
 
-const METADATA_FIELDS_FOR_HEADER =
-    ['codeRepository',
-      'dateModified',
-      'description',
-      'downloadUrl',
-      'license',
-      'license_file',
-      'long_title',
-      'name',
-      'owner',
-      'ownerType'];
+const METADATA_FIELDS_FOR_HEADER = [
+  'dateModified',
+  'description',
+  'license',
+  'long_title',
+  'name',
+  'stargazers_count',
+  'releases'
+];
+
+// Fields to exclude from the panel view
+const METADATA_FILTERED_FIELDS = [
+  'fullName',
+  'codeRepository',
+  'dateModified',
+  'dateCreation',
+  'license',
+  'long_title',
+  'name',
+  'owner',
+  'ownerType',
+  'releases',
+  'stargazers_count',
+];
 
 export default {
   name: "MetadataCard",
@@ -187,33 +198,57 @@ export default {
     tabIndex: null,
     panelItemsList: [],
     header:{
-      title: "Default Tittle",
-      stars: 150,
-      releaseLast: '0.5.2',
-      releaseTotal: 7,
-      sortDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas venenatis sit amet purus nec pellentesque.verra elementum.",
-      owner: "Owner",
-      license: "MIT License",
-      dateLastModify: new Date(),
-      dateCreation: new Date(),
+      title: null,
+      stars: null,
+      releaseLast: null,
+      releaseTotal: null,
+      sortDescription: null,
+      license: null,
+      dateLastModify: null,
     }
   }),
   methods:{
     generateTabs(rawMetadata) {
-      let headerItemsList = []
       for(let item in rawMetadata){
-        if(this.isHeaderITem(item)){
-          headerItemsList.push(rawMetadata[item])
+        if(this.isHeaderItem(item)){
+          this.buildHeaderItem(item, rawMetadata[item])
         }
-        else{
+        if(!this.isFilteredITem((item))){
           this.panelItemsList.push(this.buildPanelItem(item, rawMetadata[item]))
         }
       }
-      this.buildHeader(headerItemsList)
     },
-    buildHeader(headerItemsList){
-      // TODO finish method
-      this.header.testList = headerItemsList
+    buildHeaderItem(name, somefItem){
+
+      switch (name) {
+        case 'long_title':
+          this.header.title = somefItem.excerpt
+          break
+        case 'name':
+          if(this.header.title === null){
+            this.header.title = somefItem.excerpt
+          }
+          break
+        case 'stargazers_count':
+          this.header.stars = somefItem.excerpt.count
+          break
+        case 'description':
+          this.header.sortDescription = Array.isArray(somefItem) ?
+              somefItem.find(item => item.technique === 'GitHub API').excerpt :
+              somefItem.excerpt
+          break
+        case 'releases':
+          this.header.releaseTotal = somefItem.excerpt.length
+          this.header.releaseLast = somefItem.excerpt[0].tag_name
+          break
+        case 'dateModified':
+          this.header.dateLastModify = somefItem.excerpt
+          break
+        case 'license':
+          this.header.license = somefItem.excerpt.name + ' (' + somefItem.excerpt.url + ')'
+          break
+      }
+
     },
     buildPanelItem(name, somefItem){
       let panelItem = {
@@ -226,7 +261,7 @@ export default {
       if(Array.isArray(somefItem)){
         let averageConfidence = 0
         for(let i=0; i<somefItem.length; i++){
-          panelItem.body.push(this.buildPanelItem(i+'-'+name, somefItem[i]))
+          panelItem.body.push(this.buildPanelItem(name+'-'+i, somefItem[i]))
           averageConfidence = averageConfidence + Number(somefItem[i].confidence[0])
           panelItem.extractionMethods.add(somefItem[i].technique)
         }
@@ -245,13 +280,14 @@ export default {
       return panelItem
     },
 
-    isHeaderITem(name){
-      let find = false;
-      for(let i=0; i<METADATA_FIELDS_FOR_HEADER.length && !find; i++){
-        find = METADATA_FIELDS_FOR_HEADER[i] === name
-      }
-      return find
+    isHeaderItem(name){
+      return METADATA_FIELDS_FOR_HEADER.find(item => item === name) !== undefined
     },
+
+    isFilteredITem(name){
+      return METADATA_FILTERED_FIELDS.find(item => item === name) !== undefined
+    },
+
     parseCitation(data){
       if(typeof data === 'string' || data instanceof String) {
         if(data.charAt(0) === '@'){

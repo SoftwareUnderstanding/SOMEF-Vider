@@ -19,7 +19,7 @@ from each other.
 
 Clone this repository
 ```
-$ git clone https://github.com/Vitoriox/SOMEF-Vider.git      
+$ git clone https://github.com/SoftwareUnderstanding/SOMEF-Vider.git      
 ```
 
 #### Client
@@ -50,10 +50,26 @@ Run service
 (virtualenv) $ python -m flask run
 ```
 
-
-
 ## Production installation
-Production module is currently unavailable
+It follows roughly the same process as the development installation but, in this case, the client is compiled and
+integrated into the flask service.
+
+Go to the client folder and install the dependencies if they are not installed.
+```
+$ cd SOMEF-Vider/client/
+$ npm install
+```
+Now instead of running the client, execute the following command to build it:
+```
+$ npm run build
+```
+This will generate a new folder in the current directory called "dist" with all the client files compiled.
+To integrate this files in the service, just move the folder "dist" to the service folder and rename it to "static".
+```
+$ mv dist ../server/static
+```
+This last 2 mandates are (for now) the only difference between development and production. To run the tool
+follow the steps listed above at the "Service" section.
 
 ## Authors
 @Vitoriox

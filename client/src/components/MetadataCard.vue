@@ -12,7 +12,19 @@
                   </a>
                 </v-col>
                 <v-col align-self="center" md="auto">
-                  <v-btn icon>
+                  <v-select
+                      dense
+                      :items="downloadFiletypesList"
+                      v-show="toggleDownloadSelector"
+                      :menu-props="{value:toggleDownloadSelector}"
+                      @change="downloadMetadata"
+                  />
+                </v-col>
+                <v-col align-self="center" md="auto">
+                  <v-btn
+                      icon
+                      @click="toggleDownloadSelector = !toggleDownloadSelector"
+                  >
                     <v-icon>mdi-download</v-icon>
                   </v-btn>
                 </v-col>
@@ -197,6 +209,12 @@ export default {
   data: () => ({
     tabIndex: null,
     panelItemsList: [],
+    downloadFiletypesList: [
+      {text:'JSON', value:'json'},
+      {text:'CodeMeta', value: 'codemeta'},
+      {text:'Turtle', value: 'turtle'},
+    ],
+    toggleDownloadSelector: false,
     header:{
       title: null,
       stars: null,
@@ -219,7 +237,6 @@ export default {
       }
     },
     buildHeaderItem(name, somefItem){
-
       switch (name) {
         case 'long_title':
           this.header.title = somefItem.excerpt
@@ -298,6 +315,10 @@ export default {
           })
         }
       }
+    },
+    downloadMetadata(fileType){
+      this.toggleDownloadSelector = false
+      this.$emit('click-download', fileType)
     }
   },
   created() {

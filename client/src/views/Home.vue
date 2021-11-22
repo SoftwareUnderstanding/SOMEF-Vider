@@ -57,6 +57,7 @@
 
     <metadata-card v-if="showMetadataCard"
                    :metadata="metadata"
+                   @click-download="downloadMetadata"
     ></metadata-card>
 
     <!-- Button to top -->
@@ -140,6 +141,17 @@ export default {
       this.loading = true
       this.showMetadataCard = false
       this.fetchMetadata(this.url, this.threshold, this.ignoreClassifiers)
+    },
+    downloadMetadata(fileType){
+      axiosService.downloadMetadata(this.url, this.threshold, this.ignoreClassifiers, fileType)
+          .then(response => {
+            console.log(response.data)
+          })
+          .catch(error => {
+            console.log(error.response)
+            this.serverResponse = error.response
+            this.showErrorDialog = true
+          })
     }
   }
 }

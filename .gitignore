@@ -4,3 +4,4 @@ server/venv
 client/node_modules
 /client/dist
 /server/static/
+/server/generated-files/

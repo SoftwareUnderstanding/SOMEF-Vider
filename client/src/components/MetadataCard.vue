@@ -259,10 +259,10 @@ export default {
           if(Array.isArray(somefItem)){
             let techniques = ['GitHub API', 'Supervised classification', "Header extraction"]
             let description = undefined
-            for(let i=0; i<techniques.length || description===undefined; i++){
+            for(let i=0; i<techniques.length && description===undefined; i++){
               description = somefItem.find(item => item.technique === techniques[i])
             }
-            if(!description){
+            if(description !== undefined){
               this.header.sortDescription = description.excerpt
             }
           }

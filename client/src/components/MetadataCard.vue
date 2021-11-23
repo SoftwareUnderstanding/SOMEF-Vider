@@ -105,13 +105,15 @@
                   {{item.name}}
                 </v-col>
                 <v-col cols="3" md="auto">
-                  <confidence-chip :value="item.confidence"></confidence-chip>
+                  <confidence-chip
+                      v-if="item.confidence !== null"
+                      :value="item.confidence"
+                  ></confidence-chip>
                   <extract-method-chip
                       v-for="method in item.extractionMethods"
                       :value="method"
                       :key="item.name+'-'+method"
-                      >
-                  </extract-method-chip>
+                  ></extract-method-chip>
                 </v-col>
               </v-row>
             </v-expansion-panel-header>
@@ -132,6 +134,8 @@
                   <v-container>
                     <v-row justify="center">
                       <v-col cols="11">
+                        <confidence-chip :value="subItem.confidence"></confidence-chip>
+                        <extract-method-chip :value="subItem.extractionMethods.values().next().value"></extract-method-chip>
                         <div v-if="item.name === 'citation'" v-html="parseCitation(subItem.body)"></div>
                         <editor
                             mode="viewer"
@@ -284,7 +288,6 @@ export default {
         }
       }
 
-
     },
     buildPanelItem(name, somefItem){
       let panelItem = {
@@ -295,16 +298,19 @@ export default {
       }
 
       if(Array.isArray(somefItem)){
-        let averageConfidence = 0
-        for(let i=0; i<somefItem.length; i++){
-          panelItem.body.push(this.buildPanelItem(name+'-'+i, somefItem[i]))
-          averageConfidence = averageConfidence + Number(somefItem[i].confidence[0])
-          panelItem.extractionMethods.add(somefItem[i].technique)
+        if(somefItem.length>1){
+          for(let i=0; i<somefItem.length; i++){
+            panelItem.body.push(this.buildPanelItem(name+'-'+i, somefItem[i]))
+            panelItem.extractionMethods.add(somefItem[i].technique)
+          }
+          panelItem.name = name
         }
-        averageConfidence = averageConfidence / somefItem.length
-
-        panelItem.name = name
-        panelItem.confidence = averageConfidence
+        else{
+          panelItem.name = name
+          panelItem.body = somefItem[0].excerpt.toString()
+          panelItem.confidence = somefItem[0].confidence[0]
+          panelItem.extractionMethods = new Set().add(somefItem[0].technique)
+        }
       }
       else{
         panelItem.name = name

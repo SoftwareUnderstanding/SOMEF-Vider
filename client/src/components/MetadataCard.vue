@@ -195,6 +195,8 @@ const METADATA_FILTERED_FIELDS = [
   'stargazers_count',
 ];
 
+const NO_DATA_AVAILABLE = "(NO DATA AVAILABLE)"
+
 export default {
   name: "MetadataCard",
   components:{
@@ -250,9 +252,19 @@ export default {
           this.header.stars = somefItem.excerpt.count
           break
         case 'description':
-          this.header.sortDescription = Array.isArray(somefItem) ?
-              somefItem.find(item => item.technique === 'GitHub API').excerpt :
-              somefItem.excerpt
+          if(Array.isArray(somefItem)){
+            let techniques = ['GitHub API', 'Supervised classification', "Header extraction"]
+            let description = undefined
+            for(let i=0; i<techniques.length || description===undefined; i++){
+              description = somefItem.find(item => item.technique === techniques[i])
+            }
+            if(!description){
+              this.header.sortDescription = description.excerpt
+            }
+          }
+          else {
+            this.header.sortDescription = somefItem.excerpt
+          }
           break
         case 'releases':
           this.header.releaseTotal = somefItem.excerpt.length
@@ -265,6 +277,13 @@ export default {
           this.header.license = somefItem.excerpt.name + ' (' + somefItem.excerpt.url + ')'
           break
       }
+
+      for (const [key, value] of Object.entries(this.header)) {
+        if(!value){
+          this.header[key] = NO_DATA_AVAILABLE
+        }
+      }
+
 
     },
     buildPanelItem(name, somefItem){

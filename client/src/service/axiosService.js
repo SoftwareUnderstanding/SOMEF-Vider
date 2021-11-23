@@ -27,6 +27,7 @@ function downloadMetadata(url, threshold, ignoreClassifiers, filetype) {
             threshold: threshold,
             ignoreClassifiers: ignoreClassifiers,
             filetype: filetype,
-        }
+        },
+        responseType: 'blob'
     });
 }

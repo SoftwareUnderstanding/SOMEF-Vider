@@ -143,9 +143,19 @@ export default {
       this.fetchMetadata(this.url, this.threshold, this.ignoreClassifiers)
     },
     downloadMetadata(fileType){
+      let filenames = {
+        json: "metadata.json",
+        codemeta: "codemeta.json",
+        turtle: "graph.ttl"
+      }
       axiosService.downloadMetadata(this.url, this.threshold, this.ignoreClassifiers, fileType)
           .then(response => {
-            console.log(response.data)
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', filenames[fileType]);
+            document.body.appendChild(link);
+            link.click();
           })
           .catch(error => {
             console.log(error.response)

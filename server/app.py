@@ -1,7 +1,9 @@
 from flask import Flask, request, send_file, send_from_directory
+from flask_cors import CORS
 from somef.cli import cli_get_data, run_cli
 
 app = Flask(__name__)
+CORS(app)
 
 dict_filename = {
     "json": "metadata.json",
@@ -54,7 +56,7 @@ def get_metadata():
 
 @app.route('/download')
 def download_metadata():
-    filename = dict_filename.get(request.args.get('fileType'))
+    filename = dict_filename.get(request.args.get('filetype'))
     if filename is None:
         return "Invalid file type for download", 400
 

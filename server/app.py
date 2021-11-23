@@ -3,6 +3,12 @@ from somef.cli import cli_get_data, run_cli
 
 app = Flask(__name__)
 
+dict_filename = {
+    "json": "metadata.json",
+    "codemeta": "codemeta.json",
+    "turtle": "graph.ttl"
+}
+
 
 @app.route('/')
 def index():
@@ -29,51 +35,47 @@ def get_metadata():
     if ignore_classifiers is None:
         return "Ignore Classifiers flag is not a boolean", 400
 
-    url = request.args.get('url')
-    if url.find("https://github.com/") != 0:
+    repo_url = request.args.get('url')
+    if repo_url.find("https://github.com/") != 0:
         return "GitHub URL is not valid", 400
 
-    metadata = cli_get_data(threshold, ignore_classifiers, repo_url=url)
-    path = 'server/generated-files/metadata'
-    run_cli(threshold=threshold, ignore_classifiers=ignore_classifiers, repo_url=url,
-            output=path, graph_out=path, codemeta_out=path)
-    if metadata is None:
-        return "GitHub repository is not valid", 400
-    else:
-        return metadata
+    path = 'server/generated-files/'
+
+    try:
+        run_cli(threshold=threshold, ignore_classifiers=ignore_classifiers, repo_url=repo_url,
+                output=path+dict_filename.get("json"),
+                codemeta_out=path+dict_filename.get("codemeta"),
+                graph_out=path+dict_filename.get("turtle"))
+
+        return send_from_directory('generated-files', dict_filename.get("json"))
+    except Exception:
+        return "Error extracting metadata from SOMEF", 400
 
 
 @app.route('/download')
 def download_metadata():
-    file_type = parse_file_type(request.args.get('fileType'))
-    if file_type is None:
+    filename = dict_filename.get(request.args.get('fileType'))
+    if filename is None:
         return "Invalid file type for download", 400
 
-    path = 'generated-files/'
-    if file_type == 'json':
-        try:
-            return send_file(path+'metadata.json', as_attachment=True)
-        except Exception:
-            return "Metadata file not generated", 400
-
-    elif file_type == 'codemeta':
-        try:
-            return send_file('metadata', as_attachment=True)
-        except Exception:
-            return "Metadata file not generated", 400
+    try:
+        return send_from_directory('generated-files', filename, as_attachment=True)
+    except Exception:
+        return "Requested file not found", 400
 
 
 @app.route('/test')
 def test():
     repo_url = 'https://github.com/KnowledgeCaptureAndDiscovery/somef'
-    path = 'server/generated-files/'
-    run_cli(threshold=0.8, ignore_classifiers=False, repo_url=repo_url,
-            output=path+'metadata.json', graph_out=path+'metadata-turtle', codemeta_out=path+'metadata-codemeta')
-    return send_file('generated-files/metadata.json', as_attachment=True)
-    # return cli_get_data(0.8, False, repo_url=repo_url)
+
+    return send_from_directory('generated-files', dict_filename.get("turtle"), as_attachment=True)
 
 
 def parse_threshold(value):
+    """Extract threshold value from the param for validation.
+    :param value: Input threshold value.
+    :return: A Float between 0 and 1, otherwise ``None``.
+    """
     try:
         threshold = float(value)
         if 0 <= threshold <= 1:
@@ -85,21 +87,14 @@ def parse_threshold(value):
 
 
 def parse_ignore_classifiers(value):
+    """Extract flag ignore classifiers value from the param for validation.
+    :param value: Input ignore_classifiers value.
+    :return: A Boolean value [True, False], otherwise ``None``.
+    """
     if value == 'true':
         return True
     elif value == 'false':
         return False
-    else:
-        return None
-
-
-def parse_file_type(value):
-    if value == 'json':
-        return 'json'
-    elif value == 'codemeta':
-        return 'codemeta'
-    elif value == 'turtle':
-        return 'turtle'
     else:
         return None
 

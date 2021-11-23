@@ -7,6 +7,7 @@ click-option-group==0.5.3
 cycler==0.11.0
 decorator==5.1.0
 Flask==2.0.2
+Flask-Cors==3.0.10
 fonttools==4.28.2
 idna==3.3
 importlib-metadata==4.8.2
@@ -31,10 +32,10 @@ rdflib-jsonld==0.6.2
 regex==2021.11.10
 requests==2.26.0
 scikit-learn==1.0
-scipy==1.7.2
+scipy==1.7.3
 setuptools-scm==6.3.2
 six==1.16.0
--e git+https://github.com/KnowledgeCaptureAndDiscovery/somef.git@afe65146d02021c4f6533d6fd7b50f83fbebc8ac#egg=somef
+somef==0.6.0
 soupsieve==2.3.1
 textblob==0.17.1
 threadpoolctl==3.0.0

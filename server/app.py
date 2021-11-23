@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, send_from_directory
 from flask_cors import CORS
-from somef.cli import cli_get_data, run_cli
+from somef.cli import run_cli
 
 app = Flask(__name__)
 CORS(app)

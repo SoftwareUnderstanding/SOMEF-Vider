@@ -86,7 +86,7 @@
               :key="item.name"
               @click="$vuetify.goTo('#'+item.name)"
           >
-            {{ item.name }}
+            {{ toTitleCase(item.name) }}
           </v-tab>
         </v-tabs>
 
@@ -102,7 +102,7 @@
             <v-expansion-panel-header>
               <v-row justify="space-between">
                 <v-col md="auto" align-self="center">
-                  {{item.name}}
+                  {{ toTitleCase(item.name) }}
                 </v-col>
                 <v-col cols="3" md="auto">
                   <confidence-chip
@@ -344,7 +344,12 @@ export default {
     downloadMetadata(fileType){
       this.toggleDownloadSelector = false
       this.$emit('click-download', fileType)
-    }
+    },
+    toTitleCase(str){
+      return str.replace("_"," ").replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase().split(' ').map(function (word) {
+        return (word.charAt(0).toUpperCase() + word.slice(1));
+      }).join(' ');
+    },
   },
   created() {
     this.generateTabs(this.metadata)

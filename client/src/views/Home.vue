@@ -50,14 +50,17 @@
       </v-form>
     </v-card>
 
-    <server-response-dialog :response="serverResponse"
-                            :showDialog="showErrorDialog"
-                            v-if="showErrorDialog"
+    <server-response-dialog
+        v-if="showErrorDialog"
+        :response="serverResponse"
+        :showDialog="showErrorDialog"
     ></server-response-dialog>
 
-    <metadata-card v-if="showMetadataCard"
-                   :metadata="metadata"
-                   @click-download="downloadMetadata"
+    <metadata-card
+        v-if="showMetadataCard"
+        :threshold="Number(threshold)"
+        :metadata="metadata"
+        @click-download="downloadMetadata"
     ></metadata-card>
 
     <!-- Button to top -->

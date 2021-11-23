@@ -108,6 +108,7 @@
                   <confidence-chip
                       v-if="item.confidence !== null"
                       :value="item.confidence"
+                      :threshold="threshold"
                   ></confidence-chip>
                   <extract-method-chip
                       v-for="method in item.extractionMethods"
@@ -134,7 +135,10 @@
                   <v-container>
                     <v-row justify="center">
                       <v-col cols="11">
-                        <confidence-chip :value="subItem.confidence"></confidence-chip>
+                        <confidence-chip
+                            :value="subItem.confidence"
+                            :threshold="threshold"
+                        ></confidence-chip>
                         <extract-method-chip :value="subItem.extractionMethods.values().next().value"></extract-method-chip>
                         <div v-if="item.name === 'citation'" v-html="parseCitation(subItem.body)"></div>
                         <editor
@@ -211,6 +215,10 @@ export default {
   },
   props: {
     metadata: null,
+    threshold:{
+      type: Number,
+      default: 0,
+    }
   },
   data: () => ({
     tabIndex: null,

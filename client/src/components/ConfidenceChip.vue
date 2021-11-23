@@ -25,17 +25,24 @@ export default {
     value: {
       type: Number,
       default: 0,
+    },
+    threshold:{
+      type: Number,
+      default: 0,
     }
   },
   computed:{
     color: function () {
-      if(this.value < 0.5){
+      let low = ((1-this.threshold)/3) + this.threshold
+      let high = (((1-this.threshold)/3)*2) + this.threshold
+
+      if(this.value <= low){
         return 'red'
       }
-      else if(0.5 < this.value  && this.value < 0.75){
+      else if(low < this.value  && this.value <= high){
         return 'orange'
       }
-      else if(0.75 < this.value){
+      else if(high < this.value){
         return 'green'
       }
       else{

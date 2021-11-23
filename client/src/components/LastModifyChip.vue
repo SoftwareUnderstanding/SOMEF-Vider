@@ -36,7 +36,7 @@ export default {
     colorRenderer(){
       let dateMs = new Date(this.value).setHours(0)
       let todayMs = new Date().setHours(0)
-      let diffDays = todayMs - dateMs / (1000 * 3600 * 24)
+      let diffDays = (todayMs - dateMs) / (1000 * 3600 * 24)
 
       if(diffDays > 90){
         return 'red'

@@ -275,7 +275,7 @@ export default {
           this.header.releaseLast = somefItem.excerpt[0].tag_name
           break
         case 'dateModified':
-          this.header.dateLastModify = somefItem.excerpt
+          this.header.dateLastModify = new Date(somefItem.excerpt)
           break
         case 'license':
           this.header.license = somefItem.excerpt.name + ' (' + somefItem.excerpt.url + ')'

@@ -56,9 +56,9 @@ export default {
         case 400:
           return "Bad Request"
         case 500:
-          return "Unexpected Error"
+          return "Server Error"
         default:
-          return this.response.statusText
+          return "Unknown Error"
       }
     },
     body: function(){

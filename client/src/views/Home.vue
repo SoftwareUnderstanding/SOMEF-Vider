@@ -1,8 +1,7 @@
 <template>
   <v-container>
-    <v-card flat>
       <v-card-title class="text-center justify-center">
-        SOMEF Vider
+        <h1>SOMEF Vider</h1>
       </v-card-title>
       <v-form ref="form">
         <v-row justify="space-between">
@@ -48,7 +47,6 @@
 
         </v-row>
       </v-form>
-    </v-card>
 
     <server-response-dialog
         v-if="showErrorDialog"

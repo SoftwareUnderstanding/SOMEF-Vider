@@ -86,7 +86,7 @@
               :key="item.name"
               @click="$vuetify.goTo('#'+item.name)"
           >
-            {{ toTitleCase(item.name) }}
+            {{ stringToTitleCase(item.name) }}
           </v-tab>
         </v-tabs>
 
@@ -102,7 +102,7 @@
             <v-expansion-panel-header>
               <v-row justify="space-between">
                 <v-col md="auto" align-self="center">
-                  {{ toTitleCase(item.name) }}
+                  {{ stringToTitleCase(item.name) }}
                 </v-col>
                 <v-col cols="3" md="auto">
                   <confidence-chip
@@ -199,7 +199,6 @@ const METADATA_FILTERED_FIELDS = [
   'name',
   'owner',
   'ownerType',
-  'releases',
   'stargazers_count',
 ];
 
@@ -315,7 +314,7 @@ export default {
       }
       else{
         panelItem.name = name
-        panelItem.body = somefItem.excerpt.toString()
+        panelItem.body = this.excerptToString(somefItem.excerpt)
         panelItem.confidence = somefItem.confidence[0]
         panelItem.extractionMethods = new Set().add(somefItem.technique)
       }
@@ -346,11 +345,28 @@ export default {
       this.toggleDownloadSelector = false
       this.$emit('click-download', fileType)
     },
-    toTitleCase(str){
+    stringToTitleCase(str){
       return str.replace("_"," ").replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase().split(' ').map(function (word) {
         return (word.charAt(0).toUpperCase() + word.slice(1));
       }).join(' ');
     },
+    excerptToString(excerpt){
+      let str = ''
+      if(Array.isArray(excerpt)){
+        for(let i=0; i<excerpt.length; i++){
+          str += this.excerptToString(excerpt[i]) + '\n'
+        }
+      }
+      else if(typeof excerpt === 'object'){
+        for (const [key, value] of Object.entries(excerpt)) {
+          str += key + ': ' + value + "\n"
+        }
+      }
+      else{
+        str = excerpt.toString()
+      }
+      return str
+    }
   },
   created() {
     this.generateTabs(this.metadata)

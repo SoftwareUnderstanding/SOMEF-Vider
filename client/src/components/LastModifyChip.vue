@@ -6,7 +6,7 @@
           v-on="on"
           class="ma-2"
           :color="colorRenderer()"
-          text-color="black"
+          :text-color="$vuetify.theme.dark ? 'white' : 'black'"
           label
           outlined
       >

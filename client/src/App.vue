@@ -1,11 +1,20 @@
 <template>
   <v-app>
     <v-main>
-      <v-breadcrumbs
-          :items="navBar"
-          divider="|"
-      >
-      </v-breadcrumbs>
+      <v-row>
+        <v-col>
+          <v-breadcrumbs
+              :items="navBar"
+              divider="|"
+          >
+          </v-breadcrumbs>
+        </v-col>
+        <v-col md="auto">
+          <v-btn icon @click="toggleDarkMode">
+            <v-icon>mdi-theme-light-dark</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
       <router-view/>
     </v-main>
   </v-app>
@@ -30,5 +39,10 @@ export default {
       },
     ],
   }),
+  methods:{
+    toggleDarkMode(){
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    }
+  }
 };
 </script>

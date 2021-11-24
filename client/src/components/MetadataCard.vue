@@ -124,8 +124,8 @@
               <!-- Array Content -->
               <v-carousel
                   height="auto"
-                  hide-delimiters
-                  :show-arrows = "item.body.length > 1"
+                  :show-arrows="item.body.length > 1"
+                  hide-delimiter-background
                   v-if="Array.isArray(item.body)"
               >
                 <v-carousel-item
@@ -358,6 +358,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+   .v-carousel__controls__item{
+      color: gray !important
+   }
 </style>

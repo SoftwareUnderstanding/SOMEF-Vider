@@ -66,16 +66,14 @@ export default {
       },
 
     ],
-    methodItem:{
-      icon: null,
-      name: null,
-      color: null
-    }
   }),
-  created(){
-    this.methodItem = this.methodItemsList.find(item => item.idName === this.value)
-    if(this.methodItem === undefined){
-      this.methodItem = this.methodItemsList[0]
+  computed:{
+    methodItem: function (){
+      let method = this.methodItemsList.find(item => item.idName === this.value)
+      if(method === undefined){
+        method = this.methodItemsList[0]
+      }
+      return method
     }
   }
 }

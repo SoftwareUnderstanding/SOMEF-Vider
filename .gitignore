@@ -1,6 +1,7 @@
 .idea
 .vscode
 server/venv
+env_3.9/
 client/node_modules
 /client/dist
 /server/static/

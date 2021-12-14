@@ -41,7 +41,7 @@ def get_metadata():
     if repo_url.find("https://github.com/") != 0:
         return "GitHub URL is not valid", 400
 
-    path = 'server/generated-files/'
+    path = './generated-files/'
 
     try:
         run_cli(threshold=threshold, ignore_classifiers=ignore_classifiers, repo_url=repo_url,

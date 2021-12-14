@@ -354,7 +354,7 @@ export default {
       let str = ''
       if(Array.isArray(excerpt)){
         for(let i=0; i<excerpt.length; i++){
-          str += this.excerptToString(excerpt[i]) + '\n'
+          str += this.excerptToString(excerpt[i]) + ' | '
         }
       }
       else if(typeof excerpt === 'object'){

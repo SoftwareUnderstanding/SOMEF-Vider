@@ -9,9 +9,8 @@ To obtain and deploy the client bundle in the server, follow the instructions be
 
 2- Copy the bundle outside: 
 ```
-docker run -it -v $PWD:/out /bin/bash
+docker run -it -v $PWD:/out vider-client /bin/bash
 #: mv dist /out
-   
 ```
 This will copy the bundle to the client folder.
 

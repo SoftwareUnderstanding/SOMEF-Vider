@@ -23,6 +23,9 @@ $ git clone https://github.com/SoftwareUnderstanding/SOMEF-Vider.git
 ```
 
 #### Client
+
+Before installation, configure the target server in `client/src/service/axiosService` by changing the variable `LOCAL_URL`. For local tests, use `127.0.0.1:5000` (assuming the application is deployed in that port).
+
 Install dependencies for client
 ```
 $ cd SOMEF-Vider/client/
@@ -55,6 +58,7 @@ It follows roughly the same process as the development installation but, in this
 integrated into the flask service.
 
 Go to the client folder and install the dependencies if they are not installed.
+
 ```
 $ cd SOMEF-Vider/client/
 $ npm install

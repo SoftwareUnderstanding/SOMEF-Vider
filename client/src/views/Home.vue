@@ -37,6 +37,7 @@
           <v-col cols="2" md="auto">
             <v-btn
                 color="primary"
+                @click="clickSubmit"
                 :loading="loading"
                 :disabled="loading"
             >
@@ -54,8 +55,9 @@
     ></server-response-dialog>
 
     <metadata-card
+        v-if="showMetadataCard"
         :threshold="Number(threshold)"
-        :metadata="testMetadata3"
+        :metadata="metadata"
         @click-download="downloadMetadata"
     ></metadata-card>
 

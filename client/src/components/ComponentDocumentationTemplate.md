@@ -20,7 +20,7 @@ A simple checkbox component
 | Name               | Type    | Default | Description        |
 |--------------------|---------|---------|--------------------|
 | `model` *required* | `Array` |         | The checkbox model |
-                                                                                                                                                                                                                                                                                            | `undefined`        |
+
 
 ## Data
 

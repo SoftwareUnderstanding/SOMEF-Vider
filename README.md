@@ -45,9 +45,9 @@ $ python3.9 -m venv virtualenv/
 $ source virtualenv/bin/activate 
 (virtualenv) $ python -m pip install -r requirements.txt
 ```
-Run service
+Run service. Ports can be configures in `app.py`
 ```
-(virtualenv) $ python -m flask run
+(virtualenv) $ python app.py
 ```
 
 ## Production installation

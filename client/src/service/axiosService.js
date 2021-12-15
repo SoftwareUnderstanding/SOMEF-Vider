@@ -4,7 +4,7 @@ export default {
     getMetadata,
     downloadMetadata
 }
-export const LOCAL_URL = "http://127.0.0.1:5000/"
+export const LOCAL_URL = "https://somef.linkeddata.es/"
 
 function getMetadata(url, threshold, ignoreClassifiers) {
     return Axios({

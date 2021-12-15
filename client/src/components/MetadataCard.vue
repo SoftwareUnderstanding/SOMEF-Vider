@@ -1,4 +1,6 @@
 <template>
+  <v-container>
+
       <v-card>
         <!-- Card Header -->
           <v-container>
@@ -26,6 +28,21 @@
                       @click="toggleDownloadSelector = !toggleDownloadSelector"
                   >
                     <v-icon>mdi-download</v-icon>
+                  </v-btn>
+                </v-col>
+                <v-col align-self="center" md="auto">
+                  <v-btn
+                      icon
+                  >
+                    <v-icon>mdi-card-bulleted</v-icon>
+                  </v-btn>
+                </v-col>
+                <v-col align-self="center" md="auto">
+                  <v-btn
+                      icon
+                      @click="showFilterDialog = true"
+                  >
+                    <v-icon>mdi-filter</v-icon>
                   </v-btn>
                 </v-col>
               </v-row>
@@ -169,12 +186,22 @@
         </v-expansion-panels>
 
       </v-card>
+
+    <!--Filter Dialog-->
+    <filter-dialog
+        :show-dialog="showFilterDialog"
+        @cancel="showFilterDialog=false"
+        @apply="showFilterDialog=false"
+    />
+
+  </v-container>
 </template>
 
 <script>
 import ConfidenceChip from "@/components/ConfidenceChip";
 import ExtractMethodChip from "@/components/ExtractMethodChip";
 import LastModifyChip from "@/components/LastModifyChip";
+import FilterDialog from "@/components/FilterDialog";
 import { Editor } from "vuetify-markdown-editor";
 import Cite from "citation-js";
 
@@ -210,7 +237,8 @@ export default {
     ConfidenceChip,
     ExtractMethodChip,
     LastModifyChip,
-    Editor
+    Editor,
+    FilterDialog,
   },
   props: {
     metadata: null,
@@ -228,6 +256,7 @@ export default {
       {text:'Turtle', value: 'turtle'},
     ],
     toggleDownloadSelector: false,
+    showFilterDialog: false,
     header:{
       title: null,
       stars: null,

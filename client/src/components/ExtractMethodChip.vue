@@ -13,7 +13,7 @@
         </v-icon>
       </v-chip>
     </template>
-    <span>Extraction Method: {{ methodItem.name }}</span>
+    <span>{{ methodItem.name }}</span>
   </v-tooltip>
 </template>
 

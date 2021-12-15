@@ -20,6 +20,9 @@
           The most relevant metadata will show at the header of the table, such as title, license, las update, etc. For the rest
           of the fields, each one will be enclosed in a drop down card with the extraction method used and the confidence of the value.
         </p>
+        <p>
+          Source code is available at this <a href="https://github.com/SoftwareUnderstanding/SOMEF-Vider">GitHub repository</a>
+        </p>
       </div>
     </div>
 

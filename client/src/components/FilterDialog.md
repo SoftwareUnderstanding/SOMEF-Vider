@@ -26,11 +26,11 @@ Hast two buttons with different behaviors:
 
 ## Data
 
-| Name         | Type     | Initial value                    | Description                                                                       |
-|--------------|----------|----------------------------------|-----------------------------------------------------------------------------------|
-| `techniques` | `Array`  | _TECHNIQUES_                     | List of the current techniques available to be filtered                           |
-| `prevFilter` | `Object` | {`techniquesIdx`: [] }           | Previous state of the filter, It is only modified if the changes are applied      |
-| `currFilter` | `Object` | {`techniquesIdx`: [0,1,2,3,4,5]} | Current state of the filter, It is modified constantly during de filter selection |
+| Name         | Type     | Initial value          | Description                                                                       |
+|--------------|----------|------------------------|-----------------------------------------------------------------------------------|
+| `techniques` | `Array`  | _TECHNIQUES_           | List of the current techniques available to be filtered                           |
+| `prevFilter` | `Object` | {`techniquesIdx`: [] } | Previous state of the filter, It is only modified if the changes are applied      |
+| `currFilter` | `Object` | {`techniquesIdx`: [] } | Current state of the filter, It is modified constantly during de filter selection |
 
 ## Events
 

@@ -48,6 +48,8 @@
               </v-row>
             </v-card-title>
 
+            <v-divider></v-divider>
+
             <v-card-subtitle>
               <v-container fluid>
                 <v-row>

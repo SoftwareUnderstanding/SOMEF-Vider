@@ -32,6 +32,7 @@
 
       <v-col cols="2" md="auto">
         <v-btn
+            height="56px"
             color="primary"
             @click="submit"
         >

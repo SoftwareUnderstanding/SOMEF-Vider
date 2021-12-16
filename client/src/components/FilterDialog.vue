@@ -15,13 +15,13 @@
               <v-chip-group
                   multiple
                   column
-                  v-model="currFilters.techniques"
+                  v-model="currFilters.techniquesIdx"
                   active-class="grey darken-4--text"
               >
                 <extract-method-chip
-                    v-for="tag in techniques"
-                    :key="tag"
-                    :value="tag"
+                    v-for="item in techniques"
+                    :key="item"
+                    :value="item"
                 >
                 </extract-method-chip>
               </v-chip-group>
@@ -50,6 +50,15 @@
 
 <script>
 import ExtractMethodChip from "@/components/ExtractMethodChip";
+
+const TECHNIQUES = [
+  'GitHub API',
+  'Regular expression',
+  'Header extraction',
+  'File Exploration',
+  'Supervised classification'
+];
+
 export default {
   components: {
     ExtractMethodChip
@@ -62,14 +71,12 @@ export default {
   },
   data() {
     return {
-      techniques:['GitHub API', 'Regular expression', 'Header extraction', 'File Exploration', 'Supervised classification'],
+      techniques: TECHNIQUES,
       prevFilters: {
-        techniques: [],
-        threshold: null,
+        techniquesIdx: [],
       },
       currFilters: {
-        techniques:['GitHub API', 'Regular expression', 'Header extraction', 'File Exploration', 'Supervised classification'],
-        threshold: null,
+        techniquesIdx: [],
       },
     }
   },
@@ -80,11 +87,11 @@ export default {
     },
     apply(){
       this.prevFilters = Object.assign({}, this.currFilters)
-      let filter = []
-      for(let index in this.currFilters.techniques){
-        filter.push(this.techniques[index])
-      }
-      this.$emit('apply', filter);
+
+      let inactiveTechniques = this.currFilters.techniquesIdx.map(idx => {return TECHNIQUES[idx]})
+      let techniques = Array.from(TECHNIQUES).filter(x => !inactiveTechniques.includes(x))
+
+      this.$emit('apply', {techniques: techniques});
     }
   }
 }

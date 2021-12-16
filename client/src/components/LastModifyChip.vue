@@ -5,7 +5,7 @@
           v-bind="attrs"
           v-on="on"
           class="ma-2"
-          :color="colorRenderer()"
+          :color="color"
           :text-color="$vuetify.theme.dark ? 'white' : 'black'"
           label
           outlined
@@ -29,11 +29,11 @@ export default {
       default: null,
     }
   },
-  data: () => ({
-    dateTime: null,
-  }),
-  methods:{
-    colorRenderer(){
+  computed:{
+    dateTime: function (){
+      return new Date(this.value).toUTCString()
+    },
+    color: function (){
       let dateMs = new Date(this.value).setHours(0)
       let todayMs = new Date().setHours(0)
       let diffDays = (todayMs - dateMs) / (1000 * 3600 * 24)
@@ -51,9 +51,6 @@ export default {
         return 'inherit'
       }
     }
-  },
-  created(){
-    this.dateTime = new Date(this.value).toUTCString()
   }
 }
 </script>

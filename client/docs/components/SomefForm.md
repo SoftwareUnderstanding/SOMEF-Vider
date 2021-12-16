@@ -33,3 +33,16 @@ Called when user clicks at "SUBMIT" button. Validates al form fields and emits t
 ```typescript
 submit(): void
 ```
+
+### autocomplete()
+
+This function is triggered every time there is a `keydown` event but only works if
+the key pressed is TAB. Depending on the origin of the Tab input this method
+will autocomplete the corresponding field of the form with the placeholder value if
+the field is empty.
+
+**Syntax**
+
+```typescript
+autocomplete(keydown): void
+```

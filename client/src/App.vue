@@ -61,6 +61,9 @@ export default {
     toggleDarkMode(){
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
     }
+  },
+  beforeCreate() {
+    document.title = "SOMEF Vider"
   }
 };
 </script>

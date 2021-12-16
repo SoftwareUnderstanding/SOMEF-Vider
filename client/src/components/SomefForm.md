@@ -1,8 +1,8 @@
-# checkbox
+# SOMEF Form
 
 **Author:** Vitoriox
 
-A simple checkbox component
+Formulary where user input is collected for calling SOMEF.
 
 ```html
 <somef-form @submit="submitForm"/>

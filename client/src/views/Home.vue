@@ -69,7 +69,7 @@ export default {
     showMetadataCard: false,
     showErrorDialog: false,
     serverResponse: null,
-    formData:{
+    formData: {
       url: null,
       threshold: null,
       ignoreClassifiers: false,
@@ -92,13 +92,11 @@ export default {
     fetchMetadata(url, threshold, ignoreClassifiers) {
       axiosService.getMetadata(url, threshold, ignoreClassifiers)
           .then(response => {
-            console.log(response.data)
             this.metadata = response.data
             this.showLoadingDialog = false
             this.showMetadataCard = true
           })
           .catch(error => {
-            console.log(error.response)
             this.showLoadingDialog = false
             this.serverResponse = error.response
             this.showErrorDialog = true

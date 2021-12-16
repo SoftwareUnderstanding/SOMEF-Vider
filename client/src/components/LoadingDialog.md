@@ -1,4 +1,4 @@
-# checkbox
+# Loading Dialog
 
 **Author:** Vitoriox
 

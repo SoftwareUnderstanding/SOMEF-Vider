@@ -151,7 +151,7 @@
                     v-for="subItem in item.body"
                     :key="subItem.name"
                 >
-                  <v-container>
+                  <v-container fluid>
                     <v-row justify="center">
                       <v-col cols="11">
                         <confidence-chip
@@ -166,6 +166,7 @@
                         />
                       </v-col>
                     </v-row>
+                    <br/>
                   </v-container>
                 </v-carousel-item>
               </v-carousel>

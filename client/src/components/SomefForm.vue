@@ -75,7 +75,7 @@ export default {
         setTimeout(() => {this.$refs.form.resetValidation();}, 5000);
       }
       else{
-        this.$emit('submit', this.url, this.threshold, this.ignoreClassifiers)
+        this.$emit('submit', this.url, Number(this.threshold), this.ignoreClassifiers)
       }
     },
     autocomplete(keydown){

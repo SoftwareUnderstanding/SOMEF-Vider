@@ -24,9 +24,15 @@
       <!-- Footer -->
       <v-footer absolute>
         <v-row justify="center" no-gutters>
-          <v-img max-width="75px" max-heigh="75px" contain src="./assets/OEG-logo.png"/>
-          <v-img max-width="75px" max-heigh="75px" contain src="./assets/ETSIINF-logo.png"/>
-          <v-img max-width="75px" max-heigh="75px" contain src="./assets/UPM-logo.png"/>
+          <a href="https://oeg.fi.upm.es/">
+            <v-img max-width="75px" max-heigh="75px" contain src="./assets/OEG-logo.png"/>
+          </a>
+          <a href="http://fi.upm.es/">
+            <v-img max-width="75px" max-heigh="75px" contain src="./assets/ETSIINF-logo.png"/>
+          </a>
+          <a href="https://www.upm.es/">
+            <v-img max-width="75px" max-heigh="75px" contain src="./assets/UPM-logo.png"/>
+          </a>
           <v-col class="text-center" cols="12">
             <v-divider></v-divider>
             2021 — <strong>SOMEF Vider</strong>

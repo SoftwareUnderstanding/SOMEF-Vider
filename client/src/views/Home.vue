@@ -16,7 +16,7 @@
 
     <metadata-card
         v-if="showMetadataCard"
-        :threshold="Number(formData.threshold)"
+        :threshold="formData.threshold"
         :metadata="metadata"
         @click-download="downloadMetadata"
     ></metadata-card>

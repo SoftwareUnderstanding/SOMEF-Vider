@@ -22,7 +22,7 @@
     ></metadata-card>
 
     <!-- Button to top -->
-    <v-tooltip left>
+    <v-tooltip left v-if="showMetadataCard">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
             v-bind="attrs"

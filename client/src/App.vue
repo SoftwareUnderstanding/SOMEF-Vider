@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-main>
 
-      <!-- Header -->
+    <!-- Header -->
+    <v-app-bar app>
       <v-row>
         <v-col>
           <v-breadcrumbs
@@ -17,30 +17,44 @@
           </v-btn>
         </v-col>
       </v-row>
+    </v-app-bar>
 
-      <!-- Body -->
-      <router-view/>
-
-      <!-- Footer -->
-      <v-footer absolute>
-        <v-row justify="center" no-gutters>
-          <a href="https://oeg.fi.upm.es/">
-            <v-img max-width="75px" max-heigh="75px" contain src="./assets/OEG-logo.png"/>
-          </a>
-          <a href="http://fi.upm.es/">
-            <v-img max-width="75px" max-heigh="75px" contain src="./assets/ETSIINF-logo.png"/>
-          </a>
-          <a href="https://www.upm.es/">
-            <v-img max-width="75px" max-heigh="75px" contain src="./assets/UPM-logo.png"/>
-          </a>
-          <v-col class="text-center" cols="12">
-            <v-divider></v-divider>
-            2021 — <strong>SOMEF Vider</strong>
-          </v-col>
-        </v-row>
-      </v-footer>
-
+    <!-- Body -->
+    <v-main>
+      <v-container fluid>
+        <router-view/>
+      </v-container>
     </v-main>
+
+    <!-- Footer -->
+    <v-footer>
+      <v-spacer></v-spacer>
+      <v-row justify="center" no-gutters>
+        <v-col md="auto" align-self="center">
+          <a href="https://oeg.fi.upm.es/">
+            <v-img max-width="65px" max-heigh="65px" contain src="./assets/OEG-logo.png"/>
+          </a>
+        </v-col>
+        <v-col md="auto" align-self="center">
+          <a href="http://fi.upm.es/">
+            <v-img max-width="65px" max-heigh="65px" contain src="./assets/ETSIINF-logo.png"/>
+          </a>
+        </v-col>
+        <v-col md="auto" align-self="center">
+          <a href="https://www.upm.es/">
+            <v-img max-width="65px" max-heigh="65px" contain src="./assets/UPM-logo.png"/>
+          </a>
+        </v-col>
+        <v-col class="text-center" align-self="center">
+          2021 —
+          <a href="https://github.com/SoftwareUnderstanding/SOMEF-Vider">
+            <strong>SOMEF Vider</strong>
+          </a>
+        </v-col>
+        <v-spacer></v-spacer>
+      </v-row>
+    </v-footer>
+
   </v-app>
 </template>
 

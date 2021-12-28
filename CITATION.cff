@@ -1,9 +1,13 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
+message: If you use this software, please cite it using these metadata.
+title: SOMEF VIDER
+abstract: Web applicaiton for SOMEF
 authors:
-- family-names: "Victor"
-  given-names: "Fernandez-Lancha Aranda"
-title: "SOMEF-Vider"
+  - family-names: Victor
+    given-names: Fernandez-Lancha Aranda
+  - family-names: Daniel
+    given-names: Garijo
 version: 0.0.1
 date-released: 2021-12-14
+license: Apache-2.0
 url: "https://github.com/SoftwareUnderstanding/SOMEF-Vider"

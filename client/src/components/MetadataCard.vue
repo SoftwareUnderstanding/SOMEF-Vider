@@ -30,6 +30,7 @@
                     <v-icon>mdi-download</v-icon>
                   </v-btn>
                 </v-col>
+                <!-- UNCOMMENT WHEN THE FUNCTIONALITY IS FINISH
                 <v-col align-self="center" md="auto">
                   <v-btn
                       icon
@@ -45,6 +46,7 @@
                     <v-icon>mdi-filter</v-icon>
                   </v-btn>
                 </v-col>
+                -->
               </v-row>
             </v-card-title>
 

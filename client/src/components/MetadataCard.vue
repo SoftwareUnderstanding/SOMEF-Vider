@@ -30,6 +30,7 @@
                     <v-icon>mdi-download</v-icon>
                   </v-btn>
                 </v-col>
+                <!-- UNCOMMENT WHEN THE FUNCTIONALITY IS FINISH
                 <v-col align-self="center" md="auto">
                   <v-btn
                       icon
@@ -45,8 +46,11 @@
                     <v-icon>mdi-filter</v-icon>
                   </v-btn>
                 </v-col>
+                -->
               </v-row>
             </v-card-title>
+
+            <v-divider></v-divider>
 
             <v-card-subtitle>
               <v-container fluid>
@@ -149,7 +153,7 @@
                     v-for="subItem in item.body"
                     :key="subItem.name"
                 >
-                  <v-container>
+                  <v-container fluid>
                     <v-row justify="center">
                       <v-col cols="11">
                         <confidence-chip
@@ -164,6 +168,7 @@
                         />
                       </v-col>
                     </v-row>
+                    <br/>
                   </v-container>
                 </v-carousel-item>
               </v-carousel>

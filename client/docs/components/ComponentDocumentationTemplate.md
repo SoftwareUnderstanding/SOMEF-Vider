@@ -37,10 +37,10 @@ A simple checkbox component
 | `percentageValue` | `Number` | `value`             | Defines the percentage value showed on the chip depending of `value`                             |
 ## Events
 
-| Name      | Description                                                                                            |
-|-----------|--------------------------------------------------------------------------------------------------------|
-| `loaded`  | Emitted when the component has been loaded                                                             |
-| `enabled` | Emitted the event `enabled` when loaded Multilign<br/>**Arguments**<br/><ul><li>**`x: any`**</li></ul> |
+| Name      | Payload | Description                                                                                            |
+|-----------|---------|--------------------------------------------------------------------------------------------------------|
+| `loaded`  |         | Emitted when the component has been loaded                                                             |
+| `enabled` |         | Emitted the event `enabled` when loaded Multilign<br/>**Arguments**<br/><ul><li>**`x: any`**</li></ul> |
 
 ## Methods
 

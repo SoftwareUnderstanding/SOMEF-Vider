@@ -93,6 +93,38 @@
                     {{header.license}}
                   </v-col>
                 </v-row>
+                <v-row dense no-gutters justify="center">
+                  <v-col align-self="center" md="auto">
+                    <v-btn
+                        icon
+                        :href="header.repoURL" target="_blank"
+                        :disabled="header.repoURL === '(NO DATA AVAILABLE)'"
+                        color="#4078c0"
+                    >
+                      <v-icon>mdi-github</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col align-self="center" md="auto">
+                    <v-btn
+                        icon
+                        :href="header.docker" target="_blank"
+                        :disabled="header.docker === '(NO DATA AVAILABLE)'"
+                        color="#0db7ed"
+                    >
+                      <v-icon>mdi-docker</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col align-self="center" md="auto">
+                    <v-btn
+                        icon
+                        :href="header.notebooks" target="_blank"
+                        :disabled="header.notebooks === '(NO DATA AVAILABLE)'"
+                        color="#f37726"
+                    >
+                      <v-icon>mdi-notebook</v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-container>
             </v-card-subtitle>
           </v-container>
@@ -211,13 +243,16 @@ import { Editor } from "vuetify-markdown-editor";
 import Cite from "citation-js";
 
 const METADATA_FIELDS_FOR_HEADER = [
+  'codeRepository',
   'dateModified',
   'description',
+  'hasBuildFile',
+  'hasExecutableNotebook',
   'license',
   'long_title',
   'name',
   'stargazers_count',
-  'releases'
+  'releases',
 ];
 
 // Fields to exclude from the panel view
@@ -270,6 +305,9 @@ export default {
       sortDescription: null,
       license: null,
       dateLastModify: null,
+      repoURL: null,
+      docker: null,
+      notebooks: null,
     }
   }),
   methods:{
@@ -313,6 +351,15 @@ export default {
           break
         case 'license':
           this.header.license = somefItem.excerpt.name + ' (' + somefItem.excerpt.url + ')'
+          break
+        case 'hasBuildFile':
+          this.header.docker = somefItem.excerpt[0]
+          break
+        case 'hasExecutableNotebook':
+          this.header.notebooks = somefItem.excerpt[0]
+          break
+        case 'codeRepository':
+          this.header.repoURL = somefItem.excerpt
           break
       }
 

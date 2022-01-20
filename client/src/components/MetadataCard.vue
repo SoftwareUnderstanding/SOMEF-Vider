@@ -6,6 +6,12 @@
           <v-container>
             <v-card-title>
               <v-row justify="space-between">
+                <v-img
+                    v-show="header.logo !== '(NO DATA AVAILABLE)'"
+                    max-height="50"
+                    max-width="50"
+                    :src="header.logo"
+                ></v-img>
                 <v-col align-self="center">
                   {{ header.title }}
                   <v-icon color="yellow" size="30">mdi-star-circle</v-icon>
@@ -249,6 +255,7 @@ const METADATA_FIELDS_FOR_HEADER = [
   'hasBuildFile',
   'hasExecutableNotebook',
   'license',
+  'logo',
   'long_title',
   'name',
   'stargazers_count',
@@ -308,6 +315,7 @@ export default {
       repoURL: null,
       docker: null,
       notebooks: null,
+      logo: null,
     }
   }),
   methods:{
@@ -360,6 +368,9 @@ export default {
           break
         case 'codeRepository':
           this.header.repoURL = somefItem.excerpt
+          break
+        case 'logo':
+          this.header.logo = somefItem.excerpt
           break
       }
 

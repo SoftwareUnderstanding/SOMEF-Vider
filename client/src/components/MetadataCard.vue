@@ -8,8 +8,9 @@
               <v-row justify="space-between">
                 <v-img
                     v-show="header.logo !== '(NO DATA AVAILABLE)'"
-                    max-height="50"
-                    max-width="50"
+                    max-width="100px"
+                    max-height="100px"
+                    contain
                     :src="header.logo"
                 ></v-img>
                 <v-col align-self="center">

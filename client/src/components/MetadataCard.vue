@@ -200,7 +200,6 @@
                             :threshold="threshold"
                         ></confidence-chip>
                         <extract-method-chip :value="subItem.extractionMethods.values().next().value"></extract-method-chip>
-                        <div v-if="item.name === 'citation'" v-html="parseCitation(subItem.body)"></div>
                         <editor
                             mode="viewer"
                             v-model="subItem.body"
@@ -216,7 +215,6 @@
               <v-container v-else>
                 <v-row justify="center">
                   <v-col cols="11">
-                    <div v-if="item.name === 'citation'" v-html="parseCitation(item.body)"></div>
                     <editor
                         mode="viewer"
                         v-model="item.body"
@@ -400,7 +398,7 @@ export default {
         }
         else{
           panelItem.name = name
-          panelItem.body = somefItem[0].excerpt.toString()
+          panelItem.body = this.excerptToString(somefItem[0].excerpt)
           panelItem.confidence = somefItem[0].confidence[0]
           panelItem.extractionMethods = new Set().add(somefItem[0].technique)
         }
@@ -427,9 +425,9 @@ export default {
       if(typeof data === 'string' || data instanceof String) {
         if(data.charAt(0) === '@'){
           return new Cite(data).format('bibliography', {
-            format: 'html',
             template: 'citation-apa',
-            lang: 'en-US'
+            lang: 'en-US',
+            type: 'string'
           })
         }
       }
@@ -456,7 +454,14 @@ export default {
         }
       }
       else{
-        str = excerpt.toString()
+        // Check if it is bibtex
+        if(excerpt.charAt(0) === '@' && excerpt.charAt(excerpt.length-1) === '}'){
+          str = "### APA Style\n" + this.parseCitation(excerpt) + "\n\n" +
+              "### Bibtex\n" + excerpt
+        }
+        else{
+          str = excerpt.toString()
+        }
       }
       return str
     }

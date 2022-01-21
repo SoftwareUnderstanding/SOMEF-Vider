@@ -14,7 +14,10 @@ dict_filename = {
 
 @app.route('/')
 def index():
-    return send_file('static/index.html')
+    try:
+        return send_file('static/index.html')
+    except FileNotFoundError:
+        return send_file('templates/index.html')
 
 
 @app.route('/js/<path:filename>')
@@ -82,7 +85,7 @@ def parse_threshold(value):
         threshold = float(value)
         if 0 <= threshold <= 1:
             return threshold
-    except ValueError:
+    except Exception:
         return None
 
     return None

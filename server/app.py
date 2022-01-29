@@ -30,6 +30,11 @@ def serve_static_css(filename):
     return send_from_directory('static/css', filename)
 
 
+@app.route('/img/<path:filename>')
+def serve_static_img(filename):
+    return send_from_directory('static/img', filename)
+
+
 @app.route('/metadata')
 def get_metadata():
     threshold = parse_threshold(request.args.get('threshold'))

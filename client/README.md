@@ -5,7 +5,7 @@ The dockerfile will build the client bundle application without the need of inst
 
 To obtain and deploy the client bundle in the server, follow the instructions below:
 
-0. If the image already exists, delete it: `docker rmi -f <image_id_>`
+0. If the image already exists, delete it: `docker rmi -f <image_id_>`. Alternatively, you can reuse your previous image, but remember to reclone the SOMEF-Vider repository to get the latest version.
 
 1. Build the image: `docker build -t vider-client .` This creates an image with the bundle inside it
 

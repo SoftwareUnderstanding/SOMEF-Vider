@@ -6,6 +6,13 @@
           <v-container>
             <v-card-title>
               <v-row justify="space-between">
+                <v-img
+                    v-show="header.logo !== '(NO DATA AVAILABLE)'"
+                    max-width="100px"
+                    max-height="100px"
+                    contain
+                    :src="header.logo"
+                ></v-img>
                 <v-col align-self="center">
                   {{ header.title }}
                   <v-icon color="yellow" size="30">mdi-star-circle</v-icon>
@@ -93,6 +100,38 @@
                     {{header.license}}
                   </v-col>
                 </v-row>
+                <v-row dense no-gutters justify="center">
+                  <v-col align-self="center" md="auto">
+                    <v-btn
+                        icon
+                        :href="header.repoURL" target="_blank"
+                        :disabled="header.repoURL === '(NO DATA AVAILABLE)'"
+                        color="#4078c0"
+                    >
+                      <v-icon>mdi-github</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col align-self="center" md="auto">
+                    <v-btn
+                        icon
+                        :href="header.docker" target="_blank"
+                        :disabled="header.docker === '(NO DATA AVAILABLE)'"
+                        color="#0db7ed"
+                    >
+                      <v-icon>mdi-docker</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col align-self="center" md="auto">
+                    <v-btn
+                        icon
+                        :href="header.notebooks" target="_blank"
+                        :disabled="header.notebooks === '(NO DATA AVAILABLE)'"
+                        color="#f37726"
+                    >
+                      <v-icon>mdi-notebook</v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-container>
             </v-card-subtitle>
           </v-container>
@@ -161,7 +200,6 @@
                             :threshold="threshold"
                         ></confidence-chip>
                         <extract-method-chip :value="subItem.extractionMethods.values().next().value"></extract-method-chip>
-                        <div v-if="item.name === 'citation'" v-html="parseCitation(subItem.body)"></div>
                         <editor
                             mode="viewer"
                             v-model="subItem.body"
@@ -177,7 +215,6 @@
               <v-container v-else>
                 <v-row justify="center">
                   <v-col cols="11">
-                    <div v-if="item.name === 'citation'" v-html="parseCitation(item.body)"></div>
                     <editor
                         mode="viewer"
                         v-model="item.body"
@@ -211,13 +248,17 @@ import { Editor } from "vuetify-markdown-editor";
 import Cite from "citation-js";
 
 const METADATA_FIELDS_FOR_HEADER = [
+  'codeRepository',
   'dateModified',
   'description',
+  'hasBuildFile',
+  'hasExecutableNotebook',
   'license',
+  'logo',
   'long_title',
   'name',
   'stargazers_count',
-  'releases'
+  'releases',
 ];
 
 // Fields to exclude from the panel view
@@ -270,6 +311,10 @@ export default {
       sortDescription: null,
       license: null,
       dateLastModify: null,
+      repoURL: null,
+      docker: null,
+      notebooks: null,
+      logo: null,
     }
   }),
   methods:{
@@ -314,6 +359,18 @@ export default {
         case 'license':
           this.header.license = somefItem.excerpt.name + ' (' + somefItem.excerpt.url + ')'
           break
+        case 'hasBuildFile':
+          this.header.docker = somefItem.excerpt[0]
+          break
+        case 'hasExecutableNotebook':
+          this.header.notebooks = somefItem.excerpt[0]
+          break
+        case 'codeRepository':
+          this.header.repoURL = somefItem.excerpt
+          break
+        case 'logo':
+          this.header.logo = somefItem.excerpt
+          break
       }
 
       for (const [key, value] of Object.entries(this.header)) {
@@ -341,7 +398,7 @@ export default {
         }
         else{
           panelItem.name = name
-          panelItem.body = somefItem[0].excerpt.toString()
+          panelItem.body = this.excerptToString(somefItem[0].excerpt)
           panelItem.confidence = somefItem[0].confidence[0]
           panelItem.extractionMethods = new Set().add(somefItem[0].technique)
         }
@@ -368,9 +425,9 @@ export default {
       if(typeof data === 'string' || data instanceof String) {
         if(data.charAt(0) === '@'){
           return new Cite(data).format('bibliography', {
-            format: 'html',
             template: 'citation-apa',
-            lang: 'en-US'
+            lang: 'en-US',
+            type: 'string'
           })
         }
       }
@@ -397,7 +454,14 @@ export default {
         }
       }
       else{
-        str = excerpt.toString()
+        // Check if it is bibtex
+        if(excerpt.charAt(0) === '@' && excerpt.charAt(excerpt.length-1) === '}'){
+          str = "### APA Style\n" + this.parseCitation(excerpt) + "\n\n" +
+              "### Bibtex\n" + excerpt
+        }
+        else{
+          str = excerpt.toString()
+        }
       }
       return str
     }

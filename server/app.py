@@ -14,7 +14,10 @@ dict_filename = {
 
 @app.route('/')
 def index():
-    return send_file('static/index.html')
+    try:
+        return send_file('static/index.html')
+    except FileNotFoundError:
+        return send_file('templates/index.html')
 
 
 @app.route('/js/<path:filename>')
@@ -25,6 +28,11 @@ def serve_static_js(filename):
 @app.route('/css/<path:filename>')
 def serve_static_css(filename):
     return send_from_directory('static/css', filename)
+
+
+@app.route('/img/<path:filename>')
+def serve_static_img(filename):
+    return send_from_directory('static/img', filename)
 
 
 @app.route('/metadata')
@@ -82,7 +90,7 @@ def parse_threshold(value):
         threshold = float(value)
         if 0 <= threshold <= 1:
             return threshold
-    except ValueError:
+    except Exception:
         return None
 
     return None

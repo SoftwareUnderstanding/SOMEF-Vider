@@ -6,3 +6,5 @@ client/node_modules
 /client/dist
 /server/static/
 /server/generated-files/
+server/__pycache__/*
+server/package-lock.json

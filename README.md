@@ -5,6 +5,8 @@ Web application for [SOMEF](https://github.com/KnowledgeCaptureAndDiscovery/some
 SOMEF Vider is a web application based on Vue.js and Flask to visualize the metadata retrieved from the
 SOMEF API.
 
+## Demo
+We have a running demo in [https://somef.linkeddata.es](https://somef.linkeddata.es). If the demo is down, please let us know by opening an issue.
 
 ## Development Installation
 In the development installation client and service are independent. They are mounted and executed separately
@@ -75,5 +77,12 @@ $ mv dist ../server/static
 This last 2 mandates are (for now) the only difference between development and production. To run the tool
 follow the steps listed above at the "Service" section.
 
+To generate the bundle with Docker, see the [client deployment instructions](https://github.com/SoftwareUnderstanding/SOMEF-Vider/blob/master/client/README.md).
+
 ## Authors
-@Vitoriox
+- @Vitoriox: design and implementation
+- @dgarijo: supervision, testing and deployment
+
+## Contributing
+
+If you find problems or if you wish to add new features, please let us know by opening an [issue](https://github.com/SoftwareUnderstanding/SOMEF-Vider/issues) or submitting a pull request.

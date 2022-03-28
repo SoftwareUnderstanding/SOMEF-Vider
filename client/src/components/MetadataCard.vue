@@ -7,17 +7,17 @@
             <v-card-title>
               <v-row justify="space-between">
                 <v-img
-                    v-show="header.logo !== '(NO DATA AVAILABLE)'"
+                    v-show="header.logo"
                     max-width="100px"
                     max-height="100px"
                     contain
                     :src="header.logo"
                 ></v-img>
                 <v-col align-self="center">
-                  {{ header.title }}
+                  {{ header.title ?? "(NO DATA AVAILABLE)" }}
                   <v-icon color="yellow" size="30">mdi-star-circle</v-icon>
                   <a class="grey--text text-caption">
-                    ({{ header.stars }})
+                    ({{ header.stars ?? "(NO DATA AVAILABLE)" }})
                   </a>
                 </v-col>
                 <v-col align-self="center" md="auto">
@@ -64,7 +64,7 @@
                 <v-row>
                   <v-col>
                     <v-card-text>
-                      {{ header.sortDescription }}
+                      {{ header.sortDescription ?? "(NO DATA AVAILABLE)" }}
                     </v-card-text>
                   </v-col>
                 </v-row>
@@ -73,7 +73,7 @@
                     <v-subheader>Last Release:</v-subheader>
                   </v-col>
                   <v-col align-self="center">
-                    {{header.releaseLast}}
+                    {{header.releaseLast ?? "(NO DATA AVAILABLE)" }}
                   </v-col>
                 </v-row>
                 <v-row dense no-gutters>
@@ -81,7 +81,7 @@
                     <v-subheader>Releases:</v-subheader>
                   </v-col>
                   <v-col align-self="center">
-                    {{header.releaseTotal}}
+                    {{header.releaseTotal ?? "(NO DATA AVAILABLE)" }}
                   </v-col>
                 </v-row>
                 <v-row dense no-gutters>
@@ -89,7 +89,11 @@
                     <v-subheader>Last Update:</v-subheader>
                   </v-col>
                   <v-col align-self="center">
-                    <last-modify-chip :value="header.dateLastModify"></last-modify-chip>
+                    <last-modify-chip
+                        v-if="header.dateLastModify"
+                        :value="header.dateLastModify"
+                    ></last-modify-chip>
+                    <div v-else>(NO DATA AVAILABLE)</div>
                   </v-col>
                 </v-row>
                 <v-row dense no-gutters>
@@ -97,7 +101,7 @@
                     <v-subheader>License:</v-subheader>
                   </v-col>
                   <v-col align-self="center">
-                    {{header.license}}
+                    {{header.license ?? "(NO DATA AVAILABLE)"}}
                   </v-col>
                 </v-row>
                 <v-row dense no-gutters justify="center">
@@ -105,7 +109,7 @@
                     <v-btn
                         icon
                         :href="header.repoURL" target="_blank"
-                        :disabled="header.repoURL === '(NO DATA AVAILABLE)'"
+                        :disabled="!header.repoURL"
                         color="#4078c0"
                     >
                       <v-icon>mdi-github</v-icon>
@@ -115,7 +119,7 @@
                     <v-btn
                         icon
                         :href="header.docker" target="_blank"
-                        :disabled="header.docker === '(NO DATA AVAILABLE)'"
+                        :disabled="!header.docker"
                         color="#0db7ed"
                     >
                       <v-icon>mdi-docker</v-icon>
@@ -125,7 +129,7 @@
                     <v-btn
                         icon
                         :href="header.notebooks" target="_blank"
-                        :disabled="header.notebooks === '(NO DATA AVAILABLE)'"
+                        :disabled="!header.notebooks"
                         color="#f37726"
                     >
                       <v-icon>mdi-notebook</v-icon>
@@ -255,9 +259,9 @@ const METADATA_FIELDS_FOR_HEADER = [
   'hasExecutableNotebook',
   'license',
   'logo',
-  'long_title',
+  'longTitle',
   'name',
-  'stargazers_count',
+  'stargazersCount',
   'releases',
 ];
 
@@ -268,14 +272,13 @@ const METADATA_FILTERED_FIELDS = [
   'dateModified',
   'dateCreation',
   'license',
-  'long_title',
+  'longTitle',
   'name',
   'owner',
   'ownerType',
-  'stargazers_count',
+  'repoStatus',
+  'stargazersCount',
 ];
-
-const NO_DATA_AVAILABLE = "(NO DATA AVAILABLE)"
 
 export default {
   name: "MetadataCard",
@@ -330,7 +333,7 @@ export default {
     },
     buildHeaderItem(name, somefItem){
       switch (name) {
-        case 'long_title':
+        case 'longTitle':
           this.header.title = somefItem.excerpt
           break
         case 'name':
@@ -338,7 +341,7 @@ export default {
             this.header.title = somefItem.excerpt
           }
           break
-        case 'stargazers_count':
+        case 'stargazersCount':
           this.header.stars = somefItem.excerpt.count
           break
         case 'description':
@@ -351,7 +354,7 @@ export default {
           break
         case 'releases':
           this.header.releaseTotal = somefItem.excerpt.length
-          this.header.releaseLast = somefItem.excerpt[0].tag_name
+          this.header.releaseLast = somefItem.excerpt[0].tagName
           break
         case 'dateModified':
           this.header.dateLastModify = new Date(somefItem.excerpt)
@@ -372,13 +375,6 @@ export default {
           this.header.logo = somefItem.excerpt
           break
       }
-
-      for (const [key, value] of Object.entries(this.header)) {
-        if(!value){
-          this.header[key] = NO_DATA_AVAILABLE
-        }
-      }
-
     },
     buildPanelItem(name, somefItem){
       let panelItem = {

@@ -3,139 +3,9 @@
 
       <v-card>
         <!-- Card Header -->
-          <v-container>
-            <v-card-title>
-              <v-row justify="space-between">
-                <v-img
-                    v-show="header.logo !== '(NO DATA AVAILABLE)'"
-                    max-width="100px"
-                    max-height="100px"
-                    contain
-                    :src="header.logo"
-                ></v-img>
-                <v-col align-self="center">
-                  {{ header.title }}
-                  <v-icon color="yellow" size="30">mdi-star-circle</v-icon>
-                  <a class="grey--text text-caption">
-                    ({{ header.stars }})
-                  </a>
-                </v-col>
-                <v-col align-self="center" md="auto">
-                  <v-select
-                      dense
-                      :items="downloadFiletypesList"
-                      v-show="toggleDownloadSelector"
-                      :menu-props="{value:toggleDownloadSelector}"
-                      @change="downloadMetadata"
-                  />
-                </v-col>
-                <v-col align-self="center" md="auto">
-                  <v-btn
-                      icon
-                      @click="toggleDownloadSelector = !toggleDownloadSelector"
-                  >
-                    <v-icon>mdi-download</v-icon>
-                  </v-btn>
-                </v-col>
-                <!-- UNCOMMENT WHEN THE FUNCTIONALITY IS FINISH
-                <v-col align-self="center" md="auto">
-                  <v-btn
-                      icon
-                  >
-                    <v-icon>mdi-card-bulleted</v-icon>
-                  </v-btn>
-                </v-col>
-                <v-col align-self="center" md="auto">
-                  <v-btn
-                      icon
-                      @click="showFilterDialog = true"
-                  >
-                    <v-icon>mdi-filter</v-icon>
-                  </v-btn>
-                </v-col>
-                -->
-              </v-row>
-            </v-card-title>
-
-            <v-divider></v-divider>
-
-            <v-card-subtitle>
-              <v-container fluid>
-                <v-row>
-                  <v-col>
-                    <v-card-text>
-                      {{ header.sortDescription }}
-                    </v-card-text>
-                  </v-col>
-                </v-row>
-                <v-row dense no-gutters>
-                  <v-col cols="2" align-self="center">
-                    <v-subheader>Last Release:</v-subheader>
-                  </v-col>
-                  <v-col align-self="center">
-                    {{header.releaseLast}}
-                  </v-col>
-                </v-row>
-                <v-row dense no-gutters>
-                  <v-col cols="2" align-self="center">
-                    <v-subheader>Releases:</v-subheader>
-                  </v-col>
-                  <v-col align-self="center">
-                    {{header.releaseTotal}}
-                  </v-col>
-                </v-row>
-                <v-row dense no-gutters>
-                  <v-col cols="2" align-self="center">
-                    <v-subheader>Last Update:</v-subheader>
-                  </v-col>
-                  <v-col align-self="center">
-                    <last-modify-chip :value="header.dateLastModify"></last-modify-chip>
-                  </v-col>
-                </v-row>
-                <v-row dense no-gutters>
-                  <v-col cols="2" align-self="center">
-                    <v-subheader>License:</v-subheader>
-                  </v-col>
-                  <v-col align-self="center">
-                    {{header.license}}
-                  </v-col>
-                </v-row>
-                <v-row dense no-gutters justify="center">
-                  <v-col align-self="center" md="auto">
-                    <v-btn
-                        icon
-                        :href="header.repoURL" target="_blank"
-                        :disabled="header.repoURL === '(NO DATA AVAILABLE)'"
-                        color="#4078c0"
-                    >
-                      <v-icon>mdi-github</v-icon>
-                    </v-btn>
-                  </v-col>
-                  <v-col align-self="center" md="auto">
-                    <v-btn
-                        icon
-                        :href="header.docker" target="_blank"
-                        :disabled="header.docker === '(NO DATA AVAILABLE)'"
-                        color="#0db7ed"
-                    >
-                      <v-icon>mdi-docker</v-icon>
-                    </v-btn>
-                  </v-col>
-                  <v-col align-self="center" md="auto">
-                    <v-btn
-                        icon
-                        :href="header.notebooks" target="_blank"
-                        :disabled="header.notebooks === '(NO DATA AVAILABLE)'"
-                        color="#f37726"
-                    >
-                      <v-icon>mdi-notebook</v-icon>
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-subtitle>
-          </v-container>
-
+        <metadata-card-header :logo="header.logo"
+                              :title="header.title"
+        />
         <!-- Tabs Names -->
         <v-tabs
             v-model="tabIndex"
@@ -242,10 +112,10 @@
 <script>
 import ConfidenceChip from "@/components/ConfidenceChip";
 import ExtractMethodChip from "@/components/ExtractMethodChip";
-import LastModifyChip from "@/components/LastModifyChip";
 import FilterDialog from "@/components/FilterDialog";
 import { Editor } from "vuetify-markdown-editor";
 import Cite from "citation-js";
+import MetadataCardHeader from "@/components/MetadataCardHeader";
 
 const METADATA_FIELDS_FOR_HEADER = [
   'codeRepository',
@@ -280,9 +150,9 @@ const NO_DATA_AVAILABLE = "(NO DATA AVAILABLE)"
 export default {
   name: "MetadataCard",
   components:{
+    MetadataCardHeader,
     ConfidenceChip,
     ExtractMethodChip,
-    LastModifyChip,
     Editor,
     FilterDialog,
   },
@@ -296,12 +166,6 @@ export default {
   data: () => ({
     tabIndex: null,
     panelItemsList: [],
-    downloadFiletypesList: [
-      {text:'JSON', value:'json'},
-      {text:'CodeMeta', value: 'codemeta'},
-      {text:'Turtle', value: 'turtle'},
-    ],
-    toggleDownloadSelector: false,
     showFilterDialog: false,
     header:{
       title: null,
@@ -351,7 +215,7 @@ export default {
           break
         case 'releases':
           this.header.releaseTotal = somefItem.excerpt.length
-          this.header.releaseLast = somefItem.excerpt[0].tag_name
+          this.header.releaseLast = somefItem.excerpt[0].tagName
           break
         case 'dateModified':
           this.header.dateLastModify = new Date(somefItem.excerpt)
@@ -360,7 +224,7 @@ export default {
           this.header.license = somefItem.excerpt.name + ' (' + somefItem.excerpt.url + ')'
           break
         case 'hasBuildFile':
-          this.header.docker = somefItem.excerpt[0]
+          this.header.docker = somefItem[0].excerpt[0]
           break
         case 'hasExecutableNotebook':
           this.header.notebooks = somefItem.excerpt[0]

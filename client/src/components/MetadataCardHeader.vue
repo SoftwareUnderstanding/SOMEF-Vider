@@ -29,87 +29,86 @@
     <v-divider></v-divider>
 
     <v-card-subtitle>
-      <v-container fluid>
-        <v-row>
+      <v-card-text>
+        {{ description }}
+      </v-card-text>
+
+      <v-row align-content="center" class="mx-0 my-0">
+        <v-subheader class="subheader">Last Release:</v-subheader>
+        <v-row justify="space-around" align-content="center">
           <v-col>
-            <v-card-text>
-              {{ description }}
-            </v-card-text>
-          </v-col>
-        </v-row>
-        <v-row dense no-gutters>
-          <v-col cols="2" align-self="center">
-            <v-subheader>Last Release:</v-subheader>
-          </v-col>
-          <v-col align-self="center">
             {{lastRelease}}
           </v-col>
         </v-row>
-        <v-row dense no-gutters>
-          <v-col cols="2" align-self="center">
-            <v-subheader>Releases:</v-subheader>
-          </v-col>
-          <v-col align-self="center">
+      </v-row>
+
+      <v-row align-content="center" class="mx-0 my-0">
+        <v-subheader class="subheader">Releases:</v-subheader>
+        <v-row justify="space-around" align-content="center">
+          <v-col>
             {{totalReleases}}
           </v-col>
         </v-row>
-        <v-row dense no-gutters>
-          <v-col cols="2" align-self="center">
-            <v-subheader>Last Update:</v-subheader>
-          </v-col>
-          <v-col align-self="center">
-            <last-modify-chip :value="lastModify"></last-modify-chip>
+      </v-row>
+
+      <v-row align-content="center" class="mx-0 my-0">
+        <v-subheader class="subheader">Last Update:</v-subheader>
+        <v-row justify="space-around" align-content="center">
+          <v-col>
+            <last-modify-chip :value="lastModify"/>
           </v-col>
         </v-row>
-        <v-row dense no-gutters>
-          <v-col cols="2" align-self="center">
-            <v-subheader>License:</v-subheader>
-          </v-col>
-          <v-col align-self="center">
+      </v-row>
+
+      <v-row align-content="center" class="mx-0 my-0">
+        <v-subheader class="subheader">License:</v-subheader>
+        <v-row justify="space-around" align-content="center">
+          <v-col>
             {{license}}
           </v-col>
         </v-row>
-        <v-row dense no-gutters justify="center">
-          <v-col align-self="center" md="auto">
-            <v-btn
-                icon
-                :href="repo" target="_blank"
-                :disabled="!repo"
-                color="#4078c0"
-            >
-              <v-icon>mdi-github</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col align-self="center" md="auto">
-            <v-btn
-                icon
-                :href="docker" target="_blank"
-                :disabled="!docker"
-                color="#0db7ed"
-            >
-              <v-icon>mdi-docker</v-icon>
-            </v-btn>
-          </v-col>
-          <v-col align-self="center" md="auto">
-            <v-btn
-                icon
-                :href="notebooks" target="_blank"
-                :disabled="!notebooks"
-                color="#f37726"
-            >
-              <v-icon>mdi-notebook</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
+      </v-row>
+
+      <v-row align-content="space-around" class="mx-0 my-0">
+        <v-spacer/>
+        <v-btn
+            icon
+            :href="repo" target="_blank"
+            :disabled="!repo"
+            color="#4078c0"
+        >
+          <v-icon>mdi-github</v-icon>
+        </v-btn>
+
+        <v-btn
+            icon
+            :href="docker" target="_blank"
+            :disabled="!docker"
+            color="#0db7ed"
+        >
+          <v-icon>mdi-docker</v-icon>
+        </v-btn>
+
+        <v-btn
+            icon
+            :href="notebooks" target="_blank"
+            :disabled="!notebooks"
+            color="#f37726"
+        >
+          <v-icon>mdi-notebook</v-icon>
+        </v-btn>
+
+        <v-spacer/>
+      </v-row>
     </v-card-subtitle>
+
   </v-container>
 </template>
 
 <script>
 
 import DownloadSelector from "@/components/DownloadSelector";
-const NO_DATA_AVAILABLE = "NO DATA AVAILABLE"
+export const NO_DATA_AVAILABLE = "NO DATA AVAILABLE"
 
 export default {
   name: "MetadataCardHeader",
@@ -117,31 +116,31 @@ export default {
   props: {
     title: {
       type: String,
-      default: NO_DATA_AVAILABLE
+      default: "Default title"
     },
     stars: {
       type: Number,
-      default: NO_DATA_AVAILABLE
+      default: 696969669
     },
     lastRelease: {
       type: String,
-      default: NO_DATA_AVAILABLE
+      default: "696969.696969"
     },
     totalReleases: {
       type: Number,
-      default: NO_DATA_AVAILABLE
+      default: 69696
     },
     description: {
       type: String,
-      default: NO_DATA_AVAILABLE
+      default: "Default description"
     },
     license: {
       type: String,
-      default: NO_DATA_AVAILABLE
+      default: "Default license"
     },
     lastModify: {
       type: Date,
-      default: NO_DATA_AVAILABLE
+      default: new Date()
     },
     docker: {
       type: String,
@@ -157,7 +156,6 @@ export default {
     },
     logo: {
       type: String,
-      default: NO_DATA_AVAILABLE
     },
 
 
@@ -167,5 +165,8 @@ export default {
 </script>
 
 <style scoped>
+.subheader{
+  width: 150px;
+}
 
 </style>

@@ -145,8 +145,6 @@ const METADATA_FILTERED_FIELDS = [
   'stargazers_count',
 ];
 
-const NO_DATA_AVAILABLE = "(NO DATA AVAILABLE)"
-
 export default {
   name: "MetadataCard",
   components:{
@@ -235,12 +233,6 @@ export default {
         case 'logo':
           this.header.logo = somefItem.excerpt
           break
-      }
-
-      for (const [key, value] of Object.entries(this.header)) {
-        if(!value){
-          this.header[key] = NO_DATA_AVAILABLE
-        }
       }
 
     },

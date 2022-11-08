@@ -43,21 +43,21 @@
           </v-container>
         </v-carousel-item>
       </v-carousel>
-
-      <!-- String Content -->
-      <v-expansion-panel-content v-if="content.length===1">
-        <v-container>
-          <v-row justify="center">
-            <v-col cols="11">
-              <editor mode="viewer"
-                      v-model="content[0].excerpt"
-              />
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-expansion-panel-content>
-
     </v-expansion-panel-content>
+
+    <!-- String Content -->
+    <v-expansion-panel-content v-if="content.length===1">
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="11">
+            <editor mode="viewer"
+                    v-model="content[0].excerpt"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-expansion-panel-content>
+
   </v-expansion-panel>
 </template>
 

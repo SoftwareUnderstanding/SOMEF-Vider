@@ -14,6 +14,7 @@
                             :docker="header.docker"
                             :notebooks="header.notebooks"
                             :repo="header.repoURL"
+                            @download="(filetype) => $emit('download',filetype)"
       />
 
       <!-- Tabs Names -->

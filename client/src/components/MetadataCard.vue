@@ -182,18 +182,18 @@ export default {
       if(Array.isArray(somefItem)){
         panelItem.content = somefItem.map(item => {
           return {
-            confidence: item.confidence[0],
+            confidence: Array.isArray(item.confidence[0]) ? item.confidence[0][0] : item.confidence[0],
             extractionMethod: item.technique,
             excerpt: this.excerptToString(item.excerpt)
           }
         })
       }
       else{
-        panelItem.content = {
-          confidence: somefItem.confidence[0],
+        panelItem.content = [{
+          confidence: Array.isArray(somefItem.confidence[0]) ? somefItem.confidence[0][0] : somefItem.confidence[0],
           extractionMethod: somefItem.technique,
           excerpt: this.excerptToString(somefItem.excerpt)
-        }
+        }]
       }
 
       return panelItem
@@ -247,7 +247,4 @@ export default {
 </script>
 
 <style>
-.v-carousel__controls__item{
-  color: gray !important
-}
 </style>

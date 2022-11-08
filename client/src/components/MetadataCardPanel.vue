@@ -9,9 +9,9 @@
                            :value="content[0].confidence"
                            :threshold="threshold"
           />
-          <extract-method-chip v-for="method in extractionMethodList"
+          <extract-method-chip v-for="(method, index) in extractionMethodList"
                                :value="method"
-                               :key="name+'-'+method"
+                               :key="index"
           />
       </v-row>
     </v-expansion-panel-header>

@@ -13,15 +13,15 @@
           />
         </v-col>
         <v-col md="auto" align-self="center">
-          {{ title }}
+          {{ title ? title : unavailable}}
           <v-icon color="yellow" size="30">mdi-star-circle</v-icon>
           <a class="grey--text text-caption">
-            ({{ stars }})
+            ({{ stars ? stars :unavailable }})
           </a>
         </v-col>
         <v-spacer/>
         <v-col md="auto" align-self="center">
-          <download-selector/>
+          <download-selector @download="(filetype) => $emit('download',filetype)"/>
         </v-col>
       </v-row>
     </v-card-title>
@@ -30,14 +30,14 @@
 
     <v-card-subtitle>
       <v-card-text>
-        {{ description }}
+        {{ description ? description : unavailable}}
       </v-card-text>
 
       <v-row align-content="center" class="mx-0 my-0">
         <v-subheader class="subheader">Last Release:</v-subheader>
         <v-row justify="space-around" align-content="center">
           <v-col>
-            {{lastRelease}}
+            {{lastRelease ? lastRelease : unavailable}}
           </v-col>
         </v-row>
       </v-row>
@@ -46,7 +46,7 @@
         <v-subheader class="subheader">Releases:</v-subheader>
         <v-row justify="space-around" align-content="center">
           <v-col>
-            {{totalReleases}}
+            {{totalReleases ? totalReleases : unavailable}}
           </v-col>
         </v-row>
       </v-row>
@@ -55,7 +55,8 @@
         <v-subheader class="subheader">Last Update:</v-subheader>
         <v-row justify="space-around" align-content="center">
           <v-col>
-            <last-modify-chip :value="lastModify"/>
+            <last-modify-chip v-if="lastModify" :value="lastModify"/>
+            <span v-else> {{unavailable}} </span>
           </v-col>
         </v-row>
       </v-row>
@@ -108,59 +109,29 @@
 <script>
 
 import DownloadSelector from "@/components/DownloadSelector";
+import LastModifyChip from "@/components/LastModifyChip";
+
 export const NO_DATA_AVAILABLE = "NO DATA AVAILABLE"
 
 export default {
   name: "MetadataCardHeader",
-  components: {DownloadSelector},
+  components: {DownloadSelector, LastModifyChip},
   props: {
-    title: {
-      type: String,
-      default: "Default title"
-    },
-    stars: {
-      type: Number,
-      default: 696969669
-    },
-    lastRelease: {
-      type: String,
-      default: "696969.696969"
-    },
-    totalReleases: {
-      type: Number,
-      default: 69696
-    },
-    description: {
-      type: String,
-      default: "Default description"
-    },
-    license: {
-      type: String,
-      default: "Default license"
-    },
-    lastModify: {
-      type: Date,
-      default: new Date()
-    },
-    docker: {
-      type: String,
-      default: null
-    },
-    repo: {
-      type: String,
-      default: null
-    },
-    notebooks: {
-      type: String,
-      default: null
-    },
-    logo: {
-      type: String,
-    },
-
-
-
-  }
+    title: String,
+    stars: Number,
+    lastRelease: String,
+    totalReleases: Number,
+    description: String,
+    license: String,
+    lastModify: Date,
+    docker: String,
+    repo: String,
+    notebooks: String,
+    logo: String,
+  },
+  data: () => ({
+    unavailable: NO_DATA_AVAILABLE
+  })
 }
 </script>
 

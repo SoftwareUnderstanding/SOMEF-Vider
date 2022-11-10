@@ -80,13 +80,6 @@ export default {
     threshold: Number,
     content: Array
   },
-  data: () => ({
-    defaultContent: {
-      confidence: null,
-      extractionMethod: new Set(),
-      excerpt: null,
-    }
-  }),
   computed: {
     extractionMethodList(){
       return new Set(this.content.map(item => {

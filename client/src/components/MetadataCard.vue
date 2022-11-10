@@ -61,11 +61,12 @@ import Cite from "citation-js";
 import MetadataCardHeader from "@/components/MetadataCardHeader";
 import MetadataCardPanel from "@/components/MetadataCardPanel";
 
+// Fields to include in the header
 const HEADER_FIELDS_MAPPINGS = {
   LOGO: "logo",
   NAME: "name",
-  TITLE: "longTitle",
-  STARTS: "stargazersCount",
+  TITLE: "long_title",
+  STARTS: "stargazers_count",
   DESCRIPTION: "description",
   RELEASE: "releases",
   LAST_UPDATE: "dateModified",
@@ -155,7 +156,7 @@ export default {
           break
         case HEADER_FIELDS_MAPPINGS.RELEASE:
           this.header.releaseTotal = somefItem.excerpt.length
-          this.header.releaseLast = somefItem.excerpt[0].tagName
+          this.header.releaseLast = somefItem.excerpt[0].tag_name
           break
         case HEADER_FIELDS_MAPPINGS.LAST_UPDATE:
           this.header.dateLastModify = new Date(somefItem.excerpt)
@@ -164,7 +165,9 @@ export default {
           this.header.license = somefItem.excerpt.name + ' (' + somefItem.excerpt.url + ')'
           break
         case HEADER_FIELDS_MAPPINGS.DOCKER:
-          this.header.docker = somefItem[0].excerpt[0]
+          this.header.docker = Array.isArray(somefItem) ?
+              somefItem[0].excerpt[0] :
+              Array.isArray(somefItem.excerpt) ? somefItem.excerpt[0] : somefItem.excerpt
           break
         case HEADER_FIELDS_MAPPINGS.NOTEBOOKS:
           this.header.notebooks = somefItem.excerpt[0]
@@ -183,7 +186,7 @@ export default {
       if(Array.isArray(somefItem)){
         panelItem.content = somefItem.map(item => {
           return {
-            confidence: Array.isArray(item.confidence[0]) ? item.confidence[0][0] : item.confidence[0],
+            confidence: Array.isArray(item.confidence) ? item.confidence[0] : item.confidence,
             extractionMethod: item.technique,
             excerpt: this.excerptToString(item.excerpt)
           }
@@ -191,7 +194,7 @@ export default {
       }
       else{
         panelItem.content = [{
-          confidence: Array.isArray(somefItem.confidence[0]) ? somefItem.confidence[0][0] : somefItem.confidence[0],
+          confidence: Array.isArray(somefItem.confidence) ? somefItem.confidence[0] : somefItem.confidence,
           extractionMethod: somefItem.technique,
           excerpt: this.excerptToString(somefItem.excerpt)
         }]

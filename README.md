@@ -86,6 +86,23 @@ follow the steps listed above at the "Service" section.
 
 To generate the bundle with Docker, see the [client deployment instructions](https://github.com/SoftwareUnderstanding/SOMEF-Vider/blob/master/client/README.md).
 
+## Docker bundle
+If you want an image of the whole application, you can generate a Docker image as follows:
+
+First configure the GitHub token in the `/server/installer.sh` setting the property `token`
+to the desired GitHub token. (ensure that this file is marked as executable)
+
+Then run the Docker command in the root directory
+```
+docker build -t somef-vider .
+```
+And run the container
+```
+docker run -p 5000:5000 somef-vider
+```
+
+Now you will have the complete application running on the port 5000
+
 ## Authors
 - @Vitoriox: design and implementation
 - @dgarijo: supervision, testing and deployment

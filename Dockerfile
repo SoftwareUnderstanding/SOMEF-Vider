@@ -15,7 +15,8 @@ RUN python -m nltk.downloader punkt
 RUN python -m nltk.downloader wordnet
 RUN python -m nltk.downloader omw-1.4
 RUN python -m nltk.downloader stopwords
-RUN somef configure -a
+
+RUN ./installer.sh
 
 CMD python app.py
 

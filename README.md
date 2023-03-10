@@ -43,16 +43,23 @@ $ npm run serve
 #### Service
 Install dependencies for server
 ```
-$ cd SOMEF-Vider/server/
+cd SOMEF-Vider/server/
 ```
 ```
-$ python3.9 -m venv virtualenv/
-$ source virtualenv/bin/activate 
-(virtualenv) $ python -m pip install -r requirements.txt
+python3.9 -m venv virtualenv/
+```
+```
+source virtualenv/bin/activate 
+```
+```
+python -m pip install -r requirements.txt --no-dependencies
+```
+```
+python -m nltk.downloader all
 ```
 Run service. Ports can be configures in `app.py`
-```
-(virtualenv) $ python app.py
+``` 
+python app.py
 ```
 
 ## Production installation

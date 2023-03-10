@@ -9,11 +9,12 @@ COPY ./server web
 COPY --from=build /src/dist /web/static
 
 WORKDIR web
-# Due to conflicts with Click dependencie between flask and somef
-# the instalation doesn't use the requirements.txt file
-RUN pip install somef
-RUN pip install flask
-RUN pip install flask-cors
+
+RUN python -m pip install -r requirements.txt --no-dependencies
+RUN python -m nltk.downloader punkt
+RUN python -m nltk.downloader wordnet
+RUN python -m nltk.downloader omw-1.4
+RUN python -m nltk.downloader stopwords
 RUN somef configure -a
 
 CMD python app.py

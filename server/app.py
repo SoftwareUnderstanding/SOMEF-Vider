@@ -59,7 +59,7 @@ def get_metadata():
 
         return send_from_directory('generated-files', dict_filename.get("json"))
     except Exception:
-        return "Error extracting metadata from SOMEF", 400
+        return "Error extracting metadata from SOMEF", 500
 
 
 @app.route('/download')
@@ -77,7 +77,11 @@ def download_metadata():
 @app.route('/test')
 def test():
     repo_url = 'https://github.com/KnowledgeCaptureAndDiscovery/somef'
-
+    path = './generated-files/'
+    run_cli(threshold=0.7, ignore_classifiers=False, repo_url=repo_url,
+                    output=path+dict_filename.get("json"),
+                    codemeta_out=path+dict_filename.get("codemeta"),
+                    graph_out=path+dict_filename.get("turtle"))
     return send_from_directory('generated-files', dict_filename.get("turtle"), as_attachment=True)
 
 

@@ -35,40 +35,46 @@ export default {
         name: 'Unknown',
       },
       {
-        idName: 'GitHub API',
+        idName: 'GitHub_API',
         icon: 'mdi-github',
         color: 'blue',
         name: 'GitHub API',
       },
       {
-        idName: 'Regular expression',
+        idName: 'regular_expression',
         icon: 'mdi-regex',
         color: 'purple',
         name: 'Regular Expression',
       },
       {
-        idName: 'Header extraction',
+        idName: 'header_analysis',
         icon: 'mdi-xml',
         color: 'pink',
         name: 'Header Extraction',
       },
       {
-        idName: 'File Exploration',
+        idName: 'file_exploration',
         icon: 'mdi-file-find',
         color: 'brown',
         name: 'File Exploration',
       },
       {
-        idName: 'Supervised classification',
+        idName: 'supervised_classification',
         icon: 'mdi-robot',
         color: '#8DB3E2',
         name: 'Supervised Classification',
       },
-
+      {
+        idName: 'software_type_heuristics',
+        icon: 'mdi-lightbulb-on-10',
+        color: '#E77D66',
+        name: 'Software Type Heuristics',
+      },
     ],
   }),
   computed:{
     methodItem: function (){
+      // console.log(this.value)
       let method = this.methodItemsList.find(item => item.idName === this.value)
       if(method === undefined){
         method = this.methodItemsList[0]

@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, send_from_directory
 from flask_cors import CORS
-from somef.cli import run_cli
+from somef.somef_cli import run_cli
 
 app = Flask(__name__)
 CORS(app)
@@ -41,7 +41,8 @@ def get_metadata():
     if threshold is None:
         return "Threshold is not Valid", 400
 
-    ignore_classifiers = parse_ignore_classifiers(request.args.get('ignoreClassifiers'))
+    ignore_classifiers = parse_ignore_classifiers(
+        request.args.get('ignoreClassifiers'))
     if ignore_classifiers is None:
         return "Ignore Classifiers flag is not a boolean", 400
 
@@ -54,11 +55,14 @@ def get_metadata():
     try:
         run_cli(threshold=threshold, ignore_classifiers=ignore_classifiers, repo_url=repo_url,
                 output=path+dict_filename.get("json"),
-                codemeta_out=path+dict_filename.get("codemeta"),
-                graph_out=path+dict_filename.get("turtle"))
+                codemeta_out=path+dict_filename.get("codemeta")
+                # ,
+                # graph_out=path+dict_filename.get("turtle")
+                )
 
         return send_from_directory('generated-files', dict_filename.get("json"))
-    except Exception:
+    except Exception as e:
+        print(e)
         return "Error extracting metadata from SOMEF", 500
 
 
@@ -79,9 +83,11 @@ def test():
     repo_url = 'https://github.com/KnowledgeCaptureAndDiscovery/somef'
     path = './generated-files/'
     run_cli(threshold=0.7, ignore_classifiers=False, repo_url=repo_url,
-                    output=path+dict_filename.get("json"),
-                    codemeta_out=path+dict_filename.get("codemeta"),
-                    graph_out=path+dict_filename.get("turtle"))
+            output=path+dict_filename.get("json"),
+            codemeta_out=path+dict_filename.get("codemeta")
+            # ,
+            # graph_out=path+dict_filename.get( "turtle")
+            )
     return send_from_directory('generated-files', dict_filename.get("turtle"), as_attachment=True)
 
 
@@ -114,4 +120,4 @@ def parse_ignore_classifiers(value):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5555, debug=True)

@@ -34,8 +34,8 @@
                 />
                 <extract-method-chip :value="item.extractionMethod"/>
                 <editor
-                    mode="viewer"
-                    v-model="item.excerpt"
+                    mode="viewer"                   
+                    v-model="item.result"
                 />
               </v-col>
             </v-row>
@@ -51,14 +51,14 @@
         <v-row justify="center">
           <v-col cols="11">
             <editor mode="viewer"
-                    v-model="content[0].excerpt"
+                    v-model="content[0].result"
             />
           </v-col>
         </v-row>
       </v-container>
     </v-expansion-panel-content>
-
   </v-expansion-panel>
+
 </template>
 
 <script>
@@ -85,7 +85,7 @@ export default {
       return new Set(this.content.map(item => {
         return item.extractionMethod
       }))
-    }
+    } 
   },
   methods: {
 

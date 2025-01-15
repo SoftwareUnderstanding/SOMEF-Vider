@@ -23,9 +23,8 @@ export default {
     toggleSelector: false,
     downloadTypes: [
       {text:'JSON', value:'json'},
-      {text:'CodeMeta', value: 'codemeta'}
-      // ,
-      // {text:'Turtle', value: 'turtle'},
+      {text:'CodeMeta', value: 'codemeta'},
+      {text:'Turtle', value: 'turtle'},
     ]
   }),
   methods: {

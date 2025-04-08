@@ -123,6 +123,8 @@ export default {
     totalReleases: Number,
     description: String,
     license: String,
+    provenance_v: String,
+    provenance_s: String,
     lastModify: Date,
     docker: String,
     repo: String,

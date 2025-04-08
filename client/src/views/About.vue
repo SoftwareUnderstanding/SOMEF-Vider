@@ -35,11 +35,15 @@
             <h5 class="card-title h5">Victor Fernandez-Lancha Aranda</h5>
             <p class="card-text">v.faranda@alumnos.upm.es</p>
           </div>
+          <div class="card-body">
+            <h5 class="card-title h5">Juan Jesús Mendoza Durán</h5>
+            <p class="card-text">juanjesus.mendoza@fi.upm.es</p>
+          </div>
         </div>
       </div>
     </div>
 
-    <h2 class="center">Mentor</h2>
+    <h2 class="center">Team</h2>
 
     <div class="row">
       <div class="col-sm-4">

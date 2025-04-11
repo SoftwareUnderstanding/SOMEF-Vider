@@ -1,6 +1,7 @@
 from flask import Flask, request, send_file, send_from_directory
 from flask_cors import CORS
 from somef.somef_cli import run_cli
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 CORS(app)
@@ -50,6 +51,22 @@ def get_metadata():
     if repo_url.find("https://github.com/") != 0:
         return "GitHub URL is not valid", 400
 
+    url = urlparse(repo_url)
+    path_components = url.path.split('/')
+
+    if len(path_components) < 3:
+        return "Repository link is not correct. \nThe correct format is https://github.com/{owner}/{repo_name}.", 400
+    
+    owner = path_components[1]
+    repo_name = path_components[2]
+
+    if len(path_components) >= 5:
+        # if not path_components[3] == "tree":
+        if path_components[3] not in ["tree", "blob"]:
+            return (f"Github link is not correct. \n"
+                    f"The correct format is https://github.com/{owner}/{repo_name}/tree/... \n"
+                    f"or  https://github.com/{owner}/{repo_name}/blob/....", 400)
+        
     path = './generated-files/'
 
     try:
@@ -59,10 +76,8 @@ def get_metadata():
                 # ,
                 # graph_out=path+dict_filename.get("turtle")
                 )
-
         return send_from_directory('generated-files', dict_filename.get("json"))
     except Exception as e:
-        print(e)
         return "Error extracting metadata from SOMEF", 500
 
 

@@ -70,6 +70,12 @@ export default {
         color: '#E77D66',
         name: 'Software Type Heuristics',
       },
+      {
+        idName: 'code_parser',
+        icon: 'mdi-code-braces',
+        color: '#BFB21D',
+        name: 'Code Parser',
+      }
     ],
   }),
   computed:{

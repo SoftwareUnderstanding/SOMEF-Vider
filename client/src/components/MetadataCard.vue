@@ -182,15 +182,19 @@ export default {
           break
         case HEADER_FIELDS_MAPPINGS.DESCRIPTION:
           if(Array.isArray(somefItem)){
-            this.header.sortDescription = somefItem.find(item => item.technique === 'GitHub_API').result.value;
+
+            const foundItem = somefItem.find(item => item.technique === 'GitHub_API' || item.technique === 'GitLab_API');
+            this.header.sortDescription = foundItem ? foundItem.result.value : somefItem[0]?.result?.value;
+            // this.header.sortDescription = somefItem.find(item => item.technique === 'GitHub_API' || item.technique === 'GitLab_API').result.value;
           }
           else {
             this.header.sortDescription = somefItem.result.value
           }
-          //Descripción es un caso especial porque además de header es panel
-          //como para para el header obtenemos el item de descripción que tenga GitHub_API, para el resto nos quedamos 
-          //con el resto de items
-          this.panelItemsList.push(this.buildPanelItem(name,somefItem.filter(item => item.technique !== 'GitHub_API')))
+        // Description is a special case because, besides being a header, it's also a panel
+        // For the header, we get the description item that has GitHub_API, while for the rest, we keep
+        // the remaining items
+
+          this.panelItemsList.push(this.buildPanelItem(name,somefItem.filter(item => item.technique !== 'GitHub_API' && item.technique !== 'GitLab_API')))
           this.sortPanelItemsList()
           break
         case HEADER_FIELDS_MAPPINGS.RELEASE:
@@ -202,11 +206,10 @@ export default {
           break
         case HEADER_FIELDS_MAPPINGS.PROVENANCE:
           this.footer.provenance_v = somefItem.somef_version
-          console.log('Provenance version: ' + somefItem.somef_version)
           this.footer.provenance_s = somefItem.somef_schema_version
-          console.log('Provenance schema: ' +somefItem.somef_schema_version)
+          // console.log('Provenance schema: ' +somefItem.somef_schema_version)
           this.footer.provenance_d = somefItem.date
-          console.log('Provenance extracted on: ' +somefItem.date)
+          // console.log('Provenance extracted on: ' +somefItem.date)
           break
         case HEADER_FIELDS_MAPPINGS.LAST_UPDATE:
           if(Array.isArray(somefItem)){
@@ -250,7 +253,6 @@ export default {
         title: this.stringToTitleCase(name),
         content: [],
       }
-
       if(Array.isArray(somefItem)){
         panelItem.content = somefItem.map(item => {
           return {

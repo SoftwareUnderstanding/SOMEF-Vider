@@ -75,6 +75,12 @@ export default {
         icon: 'mdi-code-braces',
         color: '#BFB21D',
         name: 'Code Parser',
+      },
+      {
+        idName: 'GitLab_API',
+        icon: 'mdi-gitlab',
+        color: 'orange',
+        name: 'GitLab',
       }
     ],
   }),

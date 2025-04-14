@@ -11,11 +11,11 @@
           and the proper way to cite it.
         </p>
         <p>
-          Somef Vider is a web application that retrieves the metadata of the given GitHub repository through the
+          Somef Vider is a web application that retrieves the metadata of the given GitHub and GitLab repositories through the
           Software Metadata Extraction Framework (SOMEF) and shows it in a user-friendly way.
         </p>
         <p>
-          To use this tool the user must provide a valid GitHub URL and click the submit button, wait for the server response,
+          To use this tool the user must provide a valid GitHub or GitLab URL and click the submit button, wait for the server response,
           and a table with all the metadata extracted will appear below the form.
           The most relevant metadata will show at the header of the table, such as title, license, las update, etc. For the rest
           of the fields, each one will be enclosed in a drop down card with the extraction method used and the confidence of the value.

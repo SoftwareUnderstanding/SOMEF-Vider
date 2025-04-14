@@ -1,3 +1,4 @@
+import requests
 from flask import Flask, request, send_file, send_from_directory
 from flask_cors import CORS
 from somef.somef_cli import run_cli
@@ -48,24 +49,36 @@ def get_metadata():
         return "Ignore Classifiers flag is not a boolean", 400
 
     repo_url = request.args.get('url')
-    if repo_url.find("https://github.com/") != 0:
-        return "GitHub URL is not valid", 400
 
     url = urlparse(repo_url)
+    server = url.netloc
+    bGitLab = False
     path_components = url.path.split('/')
 
-    if len(path_components) < 3:
-        return "Repository link is not correct. \nThe correct format is https://github.com/{owner}/{repo_name}.", 400
-    
-    owner = path_components[1]
-    repo_name = path_components[2]
+    if is_gitlab(server):
+        bGitLab = True
 
-    if len(path_components) >= 5:
-        # if not path_components[3] == "tree":
-        if path_components[3] not in ["tree", "blob"]:
-            return (f"Github link is not correct. \n"
-                    f"The correct format is https://github.com/{owner}/{repo_name}/tree/... \n"
-                    f"or  https://github.com/{owner}/{repo_name}/blob/....", 400)
+    if bGitLab:
+        if len(path_components) < 3:
+            return "Gitlab link is not correct.", 400
+    else:
+        if repo_url.find("https://github.com/") != 0:
+            return "GitHub URL is not valid", 400
+
+        if len(path_components) < 3:
+            return "Repository link is not correct. \nThe correct format is https://github.com/{owner}/{repo_name}.", 400
+        
+        owner = path_components[1]
+        repo_name = path_components[2]
+
+        if len(path_components) >= 5:
+            # if not path_components[3] == "tree":
+            if path_components[3] not in ["tree", "blob"]:
+                return (f"Github link is not correct. \n"
+                        f"The correct format is https://github.com/{owner}/{repo_name}/tree/... \n"
+                        f"or  https://github.com/{owner}/{repo_name}/blob/....", 400)
+        
+  
         
     path = './generated-files/'
 
@@ -132,6 +145,16 @@ def parse_ignore_classifiers(value):
         return False
     else:
         return None
+
+def is_gitlab(gitlab_server):
+    api_url = f"https://{gitlab_server}/api/v4/projects"
+    try:
+        response = requests.get(api_url, timeout=5)
+        if response.status_code in [200, 401, 403]: 
+            return True
+    except requests.RequestException:
+        pass
+    return False
 
 
 if __name__ == '__main__':

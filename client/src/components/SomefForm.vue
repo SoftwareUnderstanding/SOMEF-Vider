@@ -10,7 +10,7 @@
             v-model="url"
             :rules="rules.urlRules"
             required
-            label="GitHub URL"
+            label="GitHub or GitLab URL"
             @keydown="autocomplete"
         >
         </v-text-field>
@@ -60,7 +60,7 @@ export default {
     ignoreClassifiers: false,
     rules:{
       urlRules: [
-        v => !!v || 'GitHub URL is required',
+        v => !!v || 'GitHub or GitLab URL is required',
         //v => /^(https?:\\)?([\da-z.-]+)\.([a-z.]{2,6})([\\w .-]*)*\?$/.test(v) || 'Must be valid url',
       ],
       thresholdRules:[

@@ -60,7 +60,7 @@ def get_metadata():
 
     if bGitLab:
         if len(path_components) < 3:
-            return "Gitlab link is not correct.", 400
+            return "GitLab link is not correct.", 400
     else:
         if repo_url.find("https://github.com/") != 0:
             return "GitHub URL is not valid", 400

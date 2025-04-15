@@ -12,6 +12,8 @@
             required
             label="GitHub or GitLab URL"
             @keydown="autocomplete"
+            hint="Press Tab for default repository"
+            persistent-hint
         >
         </v-text-field>
       </v-col>
@@ -79,8 +81,9 @@ export default {
       }
     },
     autocomplete(keydown){
+      console.log('autocomplete')
       if(keydown.key === "Tab") {
-        switch (keydown.explicitOriginalTarget.id){
+        switch (keydown.target.id){
           case 'url-input':
             if(this.url === null || this.url === ""){
               this.url = "https://github.com/KnowledgeCaptureAndDiscovery/somef/"

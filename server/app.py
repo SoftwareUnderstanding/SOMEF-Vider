@@ -1,4 +1,5 @@
 import requests
+import argparse
 from flask import Flask, request, send_file, send_from_directory
 from flask_cors import CORS
 from somef.somef_cli import run_cli
@@ -158,4 +159,12 @@ def is_gitlab(gitlab_server):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5555, debug=True)
+    parser = argparse.ArgumentParser(description="Run SOMEF-Vider Flask app")
+    parser.add_argument('--host', default='0.0.0.0', help='IP address where the server listens')
+    parser.add_argument('--port', type=int, default=5000, help='Port to run the server on')
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode')
+
+    args = parser.parse_args()
+
+    app.run(host=args.host, port=args.port, debug=args.debug)
+    # app.run(host='0.0.0.0', port=5555, debug=True)

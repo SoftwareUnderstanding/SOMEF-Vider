@@ -57,9 +57,29 @@ python -m pip install -r requirements.txt --no-dependencies
 ```
 python -m nltk.downloader all
 ```
-Run service. Ports can be configures in `app.py`
+Run service. Run on default host 0.0.0.0 and port 5000. Debuf is recommended to be false on production.
 ``` 
 python app.py
+```
+
+But now we can specify a custom port,
+``` 
+python app.py --port 23705
+```
+
+a custom host and port,
+``` 
+python app.py --host 127.0.0.1 --port 8000
+```
+
+or enable debug mode in development proccess
+``` 
+python app.py --debug
+```
+
+or combine custom host, port and debug
+``` 
+python app.py --host 0.0.0.0 --port 23705 --debug
 ```
 
 ## Production installation

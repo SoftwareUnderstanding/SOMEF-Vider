@@ -10,13 +10,21 @@
     "codeRepository": "https://github.com/SoftwareUnderstanding/SOMEF-Vider",
     "issueTracker": "https://github.com/SoftwareUnderstanding/SOMEF-Vider/issues",
     "dateCreated": "2021-09-27",
-    "dateModified": "2026-02-06",
+    "dateModified": "2026-03-19",
     "downloadUrl": "https://github.com/SoftwareUnderstanding/SOMEF-Vider/releases",
     "name": "SOMEF-Vider",
     "keywords": "codemeta, demo, knowledge-graphs, metadata, open-science, rdf, research-software, scientific-software, software",
     "programmingLanguage": [
-        "Vue",
-        "Python"
+        {
+        "@type": "ComputerLanguage",
+        "name": "Vue",
+        "version": "2.6.11"
+        },
+        {
+            "@type": "ComputerLanguage",
+            "name": "Python",
+            "version": "3.9"
+        }
     ],
     "softwareRequirements": [
         {
@@ -229,13 +237,13 @@
     "author": [
         {
             "@type": "Person",
-            "familyName": "Daniel",
-            "givenName": "Garijo"
+            "familyName": "Garijo",
+            "givenName": "Daniel"
         },
         {
             "@type": "Person",
-            "familyName": "Victor",
-            "givenName": "Fernandez-Lancha Aranda"
+            "familyName": "Fernandez-Lancha Aranda",
+            "givenName": "Victor"
         }
     ],
     "referencePublication": [
@@ -247,20 +255,20 @@
             "author": [
                 {
                     "@type": "Person",
-                    "familyName": "Victor",
-                    "givenName": "Fernandez-Lancha Aranda"
+                    "familyName": "Fernandez-Lancha Aranda",
+                    "givenName": "Victor"
                 },
                 {
                     "@type": "Person",
-                    "familyName": "Daniel",
-                    "givenName": "Garijo"
+                    "familyName": "Garijo",
+                    "givenName": "Daniel"
                 }
             ],
             "datePublished": "2021"
         }
     ],
     "readme": "https://raw.githubusercontent.com/SoftwareUnderstanding/SOMEF-Vider/master/README.md",
-    "runtimePlatform": "Python: 2.8.2",
+    "runtimePlatform": "Python 3.9",
     "description": [
         "Web application for displaying the contents automatically retrieved from a code repository by applying the Software Metadata Extraction Framework (SOMEF)"
     ]

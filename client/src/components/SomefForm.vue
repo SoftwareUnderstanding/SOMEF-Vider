@@ -10,7 +10,7 @@
             v-model="url"
             :rules="rules.urlRules"
             required
-            label="GitHub or GitLab URL"
+            label="GitHub, GitLab, Codeberg, Bitbucket URL"
             @keydown="autocomplete"
             hint="Press Tab for default repository"
             persistent-hint
@@ -62,7 +62,7 @@ export default {
     ignoreClassifiers: false,
     rules:{
       urlRules: [
-        v => !!v || 'GitHub or GitLab URL is required',
+        v => !!v || 'GitHub, GitLab, Codeberg, Bitbucket URL is required',
         //v => /^(https?:\\)?([\da-z.-]+)\.([a-z.]{2,6})([\\w .-]*)*\?$/.test(v) || 'Must be valid url',
       ],
       thresholdRules:[
@@ -81,7 +81,6 @@ export default {
       }
     },
     autocomplete(keydown){
-      console.log('autocomplete')
       if(keydown.key === "Tab") {
         switch (keydown.target.id){
           case 'url-input':

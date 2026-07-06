@@ -55,17 +55,8 @@ def get_metadata():
     server = url.netloc
     bGitLab = False
     path_components = url.path.split('/')
-
-    if is_gitlab(server):
-        bGitLab = True
-
-    if bGitLab:
-        if len(path_components) < 3:
-            return "GitLab link is not correct.", 400
-    else:
-        if repo_url.find("https://github.com/") != 0:
-            return "GitHub URL is not valid", 400
-
+        
+    if repo_url.find("https://github.com/") == 0:
         if len(path_components) < 3:
             return "Repository link is not correct. \nThe correct format is https://github.com/{owner}/{repo_name}.", 400
         
@@ -78,9 +69,12 @@ def get_metadata():
                 return (f"Github link is not correct. \n"
                         f"The correct format is https://github.com/{owner}/{repo_name}/tree/... \n"
                         f"or  https://github.com/{owner}/{repo_name}/blob/....", 400)
-        
-  
-        
+    elif is_gitlab(server) or server in ('codeberg.org', 'www.codeberg.org', 'bitbucket.org', 'www.bitbucket.org'):
+        if len(path_components) < 3:
+            return "Repository link is not correct. The correct format is https://{domain}/{owner}/{repo}.", 400
+    else:
+        return "URL not supported. Supported platforms: GitHub, GitLab, Codeberg, Bitbucket", 400
+            
     path = './generated-files/'
 
     try:
